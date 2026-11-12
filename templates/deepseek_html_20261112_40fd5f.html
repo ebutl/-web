@@ -1,0 +1,1228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>𒉼 𝔢 𝔯 𝔯 𝔬 𝔯 乙 · WEB</title>
+<style>
+  :root{
+    --bg:#0a0a0a; --panel:#101010; --panel2:#141414; --line:#1e1e1e; --line2:#252525;
+    --text:#e8e8e8; --muted:#7a7a7a; --dim:#4a4a4a;
+    --live:#34d17a; --decl:#e5484d; --warn:#d4a340; --otp:#5b9eff;
+    --radius:10px; --radius-sm:6px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:14px;line-height:1.4;-webkit-font-smoothing:antialiased}
+  body{min-height:100vh;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,textarea,select{font:inherit;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:var(--radius-sm);padding:9px 11px;width:100%;outline:none;transition:border-color .15s}
+  input:focus,textarea:focus,select:focus{border-color:#3a3a3a}
+  textarea{resize:vertical;min-height:120px;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px}
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-thumb{background:#242424;border-radius:8px}
+  ::-webkit-scrollbar-track{background:transparent}
+
+  /* layout */
+  .app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+  .sidebar{background:#0c0c0c;border-right:1px solid var(--line);padding:22px 0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+  .brand{padding:0 22px 22px;font-size:13px;letter-spacing:3px;font-weight:600;color:#fff}
+  .brand small{display:block;color:var(--dim);font-size:10px;letter-spacing:1px;margin-top:4px;font-weight:400}
+  .nav-group{margin-bottom:14px}
+  .nav-label{padding:0 22px 8px;font-size:10px;letter-spacing:1.5px;color:var(--dim);text-transform:uppercase}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 22px;color:var(--muted);font-size:13px;cursor:pointer;transition:all .12s;border-left:2px solid transparent}
+  .nav-item:hover{color:#cfcfcf;background:#101010}
+  .nav-item.active{color:#fff;background:#131313;border-left-color:#fff}
+  .nav-item .ic{font-size:14px;width:16px;text-align:center;opacity:.7}
+  .nav-item.active .ic{opacity:1}
+  .sidebar-footer{margin-top:auto;padding:16px 22px;border-top:1px solid var(--line);font-size:11px;color:var(--dim)}
+  .sidebar-footer b{color:var(--text);display:block;margin-bottom:4px;font-weight:500}
+
+  .main{padding:26px 32px;min-width:0}
+  .page-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;flex-wrap:wrap;gap:12px}
+  .page-head h1{font-size:22px;font-weight:600;letter-spacing:-.3px}
+  .page-head .crumb{font-size:11px;color:var(--dim);letter-spacing:1px;margin-bottom:6px}
+
+  /* cards */
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+  .stat .label{font-size:10px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;margin-bottom:8px}
+  .stat .value{font-size:26px;font-weight:600;letter-spacing:-.5px;line-height:1;font-variant-numeric:tabular-nums}
+  .stat .sub{font-size:11px;color:var(--dim);margin-top:6px}
+
+  /* checker layout */
+  .checker-grid{display:grid;grid-template-columns:340px 1fr;gap:16px;align-items:start}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  .panel-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font-size:11px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
+  .panel-head .count{color:var(--dim);font-size:10px}
+  .panel-body{padding:16px}
+  .field{margin-bottom:12px}
+  .field label{display:block;font-size:10px;letter-spacing:1px;color:var(--dim);text-transform:uppercase;margin-bottom:6px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 14px;border-radius:var(--radius-sm);font-size:12px;font-weight:500;letter-spacing:.2px;transition:all .12s;border:1px solid var(--line2);background:var(--panel2);color:#ddd}
+  .btn:hover{background:#1a1a1a;border-color:#333}
+  .btn-primary{background:#f0f0f0;color:#0a0a0a;border-color:#f0f0f0}
+  .btn-primary:hover{background:#fff;border-color:#fff}
+  .btn-primary:disabled{opacity:.4;cursor:not-allowed}
+  .btn-danger{color:var(--decl);border-color:#3a1a1c}
+  .btn-danger:hover{background:#1e0e0f}
+  .btn-sm{padding:6px 10px;font-size:11px}
+  .btn-block{width:100%}
+
+  /* results */
+  .tabs{display:flex;gap:2px;padding:6px}
+  .tab{padding:6px 12px;font-size:11px;color:var(--muted);border-radius:6px;letter-spacing:.3px;cursor:pointer}
+  .tab:hover{background:#151515}
+  .tab.active{background:#1c1c1c;color:#fff}
+  .tab .n{color:var(--dim);margin-left:4px;font-size:10px}
+
+  .results-list{max-height:640px;overflow-y:auto}
+  .result{display:grid;grid-template-columns:80px 1fr 100px 28px;gap:10px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px}
+  .result:last-child{border-bottom:none}
+  .result:hover{background:#121212}
+  .result .badge{padding:3px 7px;border-radius:4px;font-size:9px;font-weight:600;letter-spacing:.8px;text-align:center;font-family:'Inter',sans-serif}
+  .badge.live{background:rgba(52,209,122,.12);color:var(--live)}
+  .badge.declined{background:rgba(229,72,77,.12);color:var(--decl)}
+  .badge.otp{background:rgba(91,158,255,.12);color:var(--otp)}
+  .badge.unknown{background:rgba(212,163,64,.12);color:var(--warn)}
+  .badge.charged{background:rgba(52,209,122,.2);color:#7ff0a8}
+  .result .cc{color:#d0d0d0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .result .meta{color:var(--dim);font-size:11px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .result .copy{background:transparent;border:1px solid var(--line2);border-radius:4px;padding:3px 6px;color:var(--dim);font-size:10px;opacity:0}
+  .result:hover .copy{opacity:1}
+
+  .empty{padding:50px 20px;text-align:center;color:var(--dim);font-size:12px}
+
+  /* table */
+  .table{width:100%;border-collapse:collapse;font-size:12px}
+  .table th{text-align:left;padding:10px 12px;font-size:10px;letter-spacing:1px;color:var(--dim);text-transform:uppercase;font-weight:500;border-bottom:1px solid var(--line)}
+  .table td{padding:10px 12px;border-bottom:1px solid var(--line);color:#ccc}
+  .table tr:hover td{background:#101010}
+  .table .mono{font-family:ui-monospace,monospace;color:#a5a5a5;font-size:11px}
+  .table .actions{display:flex;gap:4px;justify-content:flex-end}
+
+  .tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;letter-spacing:.5px}
+  .tag.free{background:#1a1a1a;color:#888}
+  .tag.pro{background:rgba(52,209,122,.1);color:var(--live)}
+  .tag.premium{background:rgba(91,158,255,.1);color:var(--otp)}
+  .tag.max{background:rgba(212,163,64,.1);color:var(--warn)}
+  .tag.unlimited{background:rgba(229,72,77,.1);color:var(--decl)}
+  .tag.on{background:rgba(52,209,122,.12);color:var(--live)}
+  .tag.off{background:rgba(120,120,120,.12);color:#888}
+
+  /* login */
+  .auth-wrap{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(ellipse at top,#111 0%,#0a0a0a 60%)}
+  .auth-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:34px;width:100%;max-width:400px}
+  .auth-card h1{font-size:16px;letter-spacing:4px;font-weight:600;text-align:center;margin-bottom:6px}
+  .auth-card .sub{text-align:center;color:var(--dim);font-size:11px;letter-spacing:1.5px;margin-bottom:26px;text-transform:uppercase}
+
+  /* modal */
+  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;z-index:100}
+  .modal{background:var(--panel);border:1px solid var(--line);border-radius:12px;width:100%;max-width:520px;max-height:86vh;overflow-y:auto}
+  .modal-head{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+  .modal-head h3{font-size:14px;font-weight:600;letter-spacing:.5px}
+  .modal-body{padding:20px}
+
+  .toast{position:fixed;bottom:20px;right:20px;background:#1a1a1a;border:1px solid var(--line2);border-radius:8px;padding:12px 16px;font-size:12px;color:#eee;z-index:1000;animation:slideIn .2s ease}
+  .toast.err{border-color:#4a1a1c;color:#ff8a8a}
+  .toast.ok{border-color:#1a4a2c;color:#8affb0}
+  @keyframes slideIn{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+  .progress{height:3px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:6px}
+  .progress .bar{height:100%;background:#fff;transition:width .3s ease}
+
+  .pill-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .pill{padding:4px 9px;border-radius:20px;background:var(--panel2);border:1px solid var(--line);font-size:10px;color:var(--muted);letter-spacing:.5px}
+  .pill.ok{color:var(--live);border-color:#153a25}
+  .pill.bad{color:var(--decl);border-color:#3a1518}
+
+  @media (max-width:900px){
+    .app{grid-template-columns:1fr}
+    .sidebar{position:fixed;left:0;top:0;bottom:0;width:240px;z-index:50;transform:translateX(-100%);transition:transform .2s}
+    .sidebar.open{transform:translateX(0)}
+    .main{padding:18px 14px}
+    .stat-grid{grid-template-columns:repeat(2,1fr)}
+    .checker-grid{grid-template-columns:1fr}
+    .result{grid-template-columns:66px 1fr 28px;gap:8px}
+    .result .meta{display:none}
+    .mobile-toggle{display:inline-flex!important}
+  }
+  .mobile-toggle{display:none;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:16px;line-height:1}
+
+  /* number/section classes */
+  .section{margin-bottom:16px}
+  .muted{color:var(--muted)}
+  .dim{color:var(--dim)}
+  .flex{display:flex;gap:8px;align-items:center}
+  .flex-between{display:flex;justify-content:space-between;align-items:center}
+  .mb10{margin-bottom:10px}.mb16{margin-bottom:16px}
+  .mono{font-family:ui-monospace,'SF Mono',Menlo,monospace}
+  .text-sm{font-size:12px}
+  .text-xs{font-size:11px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script>
+const API = '';
+const state = {
+  token: localStorage.getItem('ez_token') || '',
+  user: null,
+  view: 'checker',
+  stats: {total:0,live:0,declined:0,otp:0},
+  proxies: [],
+  jobId: null,
+  job: null,
+  results: [],
+  tabFilter: 'all',
+  genBin:'4', genMonth:'random', genYear:'random', genCvv:'random', genCount:10,
+  cardsInput: '',
+  proxiesInput: '',
+  adminTab: 'users',
+  adminData: {},
+  polling: null,
+  modal: null,
+  notifOpen: false,
+  notifications: [],
+  sideOpen: false,
+};
+
+// ── http ────────────────────────────────────────────────────────────────────
+async function api(path, opts={}) {
+  const headers = { 'Content-Type': 'application/json', ...(opts.headers||{}) };
+  if (state.token) headers['Authorization'] = 'Bearer ' + state.token;
+  const res = await fetch(API + path, { ...opts, headers });
+  if (res.status === 401) { logout(); throw new Error('unauth'); }
+  if (!res.ok) {
+    const err = await res.json().catch(()=>({detail:'error'}));
+    throw new Error(err.detail || 'request failed');
+  }
+  return res.json();
+}
+
+function toast(msg, type='') {
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3200);
+}
+
+function logout() {
+  state.token = ''; state.user = null;
+  localStorage.removeItem('ez_token');
+  render();
+}
+
+function setView(v) { state.view = v; state.sideOpen=false; if(v!=='checker') stopPolling(); render(); }
+
+// ── render ──────────────────────────────────────────────────────────────────
+function render() {
+  const root = document.getElementById('root');
+  if (!state.token || !state.user) {
+    root.innerHTML = renderAuth();
+    bindAuth();
+    return;
+  }
+  root.innerHTML = renderApp();
+  bindApp();
+  if (state.modal) { root.innerHTML += state.modal; bindModal(); }
+}
+
+// ── auth ────────────────────────────────────────────────────────────────────
+function renderAuth() {
+  return `
+    <div class="auth-wrap">
+      <div class="auth-card">
+        <h1>𒉼 𝔢 𝔯 𝔯 𝔬 𝔯 乙</h1>
+        <div class="sub">Web Platform</div>
+        <div class="field">
+          <label>Email</label>
+          <input id="auth-email" type="email" placeholder="you@example.com" autocomplete="username">
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input id="auth-pass" type="password" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <button id="auth-btn" class="btn btn-primary btn-block" style="margin-top:8px">Sign In</button>
+        <div class="text-xs dim" style="text-align:center;margin-top:16px">Accounts are created by admin only</div>
+      </div>
+    </div>`;
+}
+function bindAuth() {
+  const btn = document.getElementById('auth-btn');
+  const doLogin = async () => {
+    const email = document.getElementById('auth-email').value.trim();
+    const pass = document.getElementById('auth-pass').value;
+    if (!email || !pass) return toast('fill all fields', 'err');
+    btn.disabled = true; btn.textContent = 'Signing in...';
+    try {
+      const r = await api('/api/auth/login', { method:'POST', body: JSON.stringify({email, password: pass}) });
+      state.token = r.token; state.user = r.user;
+      localStorage.setItem('ez_token', r.token);
+      await bootstrap();
+    } catch(e) { toast(e.message, 'err'); btn.disabled=false; btn.textContent='Sign In'; }
+  };
+  btn.onclick = doLogin;
+  document.getElementById('auth-pass').addEventListener('keydown', e => { if (e.key==='Enter') doLogin(); });
+}
+
+async function bootstrap() {
+  try {
+    state.user = await api('/api/me');
+    await loadStats();
+    await loadProxies();
+    await loadNotifications();
+    setView('checker');
+  } catch(e) { toast(e.message,'err'); }
+}
+
+async function loadStats() { try { state.stats = await api('/api/stats'); } catch(e){} }
+async function loadProxies() { try { state.proxies = await api('/api/proxies'); } catch(e){ state.proxies=[]; } }
+async function loadNotifications() { try { state.notifications = await api('/api/notifications'); } catch(e){ state.notifications=[]; } }
+
+// ── app shell ───────────────────────────────────────────────────────────────
+function navItem(id, label, icon) {
+  const active = state.view === id ? 'active' : '';
+  return `<div class="nav-item ${active}" data-nav="${id}"><span class="ic">${icon}</span>${label}</div>`;
+}
+
+function renderApp() {
+  const isAdmin = state.user.is_admin;
+  const unread = state.notifications.filter(n => !n.read).length;
+  return `
+  <div class="app">
+    <aside class="sidebar ${state.sideOpen?'open':''}">
+      <div class="brand">𒉼 𝔢 𝔯 𝔯 𝔬 𝔯 乙<small>☞ WEB ☜</small></div>
+      <div class="nav-group">
+        <div class="nav-label">Main</div>
+        ${navItem('checker','Checker','◉')}
+        ${navItem('proxies','Proxies','◈')}
+        ${navItem('hits','My Hits','◆')}
+        ${navItem('jobs','Jobs','▤')}
+        ${navItem('account','Account','◐')}
+      </div>
+      ${isAdmin ? `
+      <div class="nav-group">
+        <div class="nav-label">Admin</div>
+        ${navItem('admin','Panel','⚙')}
+      </div>` : ''}
+      <div class="sidebar-footer">
+        <b>${escapeHtml(state.user.email)}</b>
+        ${planBadge(state.user.plan)} ${state.user.is_admin?'<span class="tag on">ADMIN</span>':''}
+        <div style="margin-top:10px">
+          <button class="btn btn-sm btn-danger btn-block" id="logout-btn">Sign out</button>
+        </div>
+      </div>
+    </aside>
+    <main class="main">
+      <div class="page-head">
+        <div>
+          <button class="mobile-toggle" id="side-toggle">☰</button>
+          <div class="crumb" style="display:inline-block;margin-left:10px">${state.user.email} / ${titleCase(state.view)}</div>
+          <h1>${titleCase(state.view)}</h1>
+        </div>
+        <div class="flex">
+          <button class="btn btn-sm" id="notif-btn">🔔 ${unread>0?unread:''}</button>
+        </div>
+      </div>
+      <div id="view-content">${renderView()}</div>
+    </main>
+  </div>`;
+}
+
+function titleCase(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+function escapeHtml(s) { return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function planBadge(plan) {
+  const map = {free:'free',pro:'pro',premium:'premium',max:'max',unlimited:'unlimited'};
+  return `<span class="tag ${map[plan]||'free'}">${(plan||'free').toUpperCase()}</span>`;
+}
+
+function renderView() {
+  switch (state.view) {
+    case 'checker': return renderChecker();
+    case 'proxies': return renderProxies();
+    case 'hits': return renderHits();
+    case 'jobs': return renderJobs();
+    case 'account': return renderAccount();
+    case 'admin': return renderAdmin();
+    default: return '';
+  }
+}
+
+// ── Checker view ────────────────────────────────────────────────────────────
+function renderChecker() {
+  const liveProxies = state.proxies.filter(p => p.status === 'live').length;
+  const cards = (state.cardsInput || '').split(/[\s,]+/).filter(c => c.includes('|')).length;
+  return `
+    <div class="stat-grid">
+      <div class="stat"><div class="label">Total Checked</div><div class="value">${state.stats.total}</div><div class="sub">all jobs</div></div>
+      <div class="stat"><div class="label">Live</div><div class="value" style="color:var(--live)">${state.stats.live}</div><div class="sub">${state.stats.total?Math.round(state.stats.live/state.stats.total*100):0}% of checked</div></div>
+      <div class="stat"><div class="label">Declined</div><div class="value" style="color:var(--decl)">${state.stats.declined}</div><div class="sub">${state.stats.total?Math.round(state.stats.declined/state.stats.total*100):0}% of checked</div></div>
+      <div class="stat"><div class="label">OTP / 3DS</div><div class="value" style="color:var(--otp)">${state.stats.otp}</div><div class="sub">${state.stats.total?Math.round(state.stats.otp/state.stats.total*100):0}% of checked</div></div>
+    </div>
+
+    <div class="checker-grid">
+      <div>
+        <div class="panel mb16">
+          <div class="panel-head"><span>Proxies</span><span class="count">${liveProxies} live</span></div>
+          <div class="panel-body">
+            ${liveProxies===0 ? `<div class="text-xs" style="color:var(--warn);margin-bottom:10px">⚠ No live proxies. Add and validate before checking.</div>` : ''}
+            <textarea id="checker-proxies" placeholder="user:pass@host:port&#10;host:port:user:pass" style="min-height:80px;font-size:11px">${state.proxiesInput}</textarea>
+            <div class="row2" style="margin-top:8px">
+              <button class="btn btn-sm" id="validate-proxies-btn">Validate</button>
+              <button class="btn btn-sm" id="proxies-goto-btn">Manage</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel mb16">
+          <div class="panel-head"><span>CC Generator</span></div>
+          <div class="panel-body">
+            <div class="field"><label>BIN (6-16 digits)</label><input id="gen-bin" value="${state.genBin}" placeholder="4"></div>
+            <div class="row2">
+              <div class="field"><label>Month</label><select id="gen-month">
+                <option value="random"${state.genMonth==='random'?' selected':''}>Random</option>
+                ${Array.from({length:12},(_,i)=>{const m=String(i+1).padStart(2,'0');return `<option value="${m}"${state.genMonth===m?' selected':''}>${m}</option>`}).join('')}
+              </select></div>
+              <div class="field"><label>Year</label><select id="gen-year">
+                <option value="random"${state.genYear==='random'?' selected':''}>Random</option>
+                ${Array.from({length:10},(_,i)=>{const y=String(26+i);return `<option value="${y}"${state.genYear===y?' selected':''}>20${y}</option>`}).join('')}
+              </select></div>
+            </div>
+            <div class="row2">
+              <div class="field"><label>CVV</label><input id="gen-cvv" value="${state.genCvv}" placeholder="random"></div>
+              <div class="field"><label>Quantity</label><input id="gen-count" type="number" value="${state.genCount}" min="1" max="500"></div>
+            </div>
+            <button class="btn btn-block" id="gen-btn">Generate Cards</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><span>Card Input</span><span class="count">${cards} cards</span></div>
+          <div class="panel-body">
+            <textarea id="cards-input" placeholder="4111111111111111|12|30|123" style="min-height:160px">${state.cardsInput}</textarea>
+            <div class="flex-between" style="margin-top:10px">
+              <span class="text-xs dim">${state.jobId && state.job && state.job.status!=='done' ? 'Job running in background' : 'Ready'}</span>
+              <span class="text-xs dim">${state.job && state.job.status!=='done' ? `${state.job.done}/${state.job.total}` : ''}</span>
+            </div>
+            <button class="btn btn-primary btn-block" id="start-check-btn" style="margin-top:10px" ${state.jobId?'disabled':''}>
+              ${state.jobId ? '⏳ Processing...' : '▶ Start Checking'}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="min-height:640px">
+        <div class="tabs" id="result-tabs">
+          ${['all','live','declined','otp','unknown'].map(t=>{
+            const counts = {all:state.results.length, live:0, declined:0, otp:0, unknown:0};
+            state.results.forEach(r=>{ if (counts[r.status]!==undefined) counts[r.status]++; });
+            return `<div class="tab ${state.tabFilter===t?'active':''}" data-tab="${t}">${titleCase(t)}<span class="n">${counts[t]||''}</span></div>`;
+          }).join('')}
+        </div>
+        <div class="results-list" id="results-list">${renderResults()}</div>
+      </div>
+    </div>`;
+}
+
+function renderResults() {
+  let list = state.results;
+  if (state.tabFilter !== 'all') list = list.filter(r => r.status === state.tabFilter);
+  if (!list.length) return `<div class="empty">No results yet — start a check</div>`;
+  return list.map(r => {
+    const cls = r.status === 'charged' ? 'live' : r.status;
+    const disp = r.status === 'charged' ? 'CHARGED' : r.status.toUpperCase();
+    const amt = r.amount > 0 ? `$${r.amount.toFixed(2)} ${r.currency}` : (r.response||'').slice(0,30);
+    return `<div class="result">
+      <span class="badge ${cls}">${disp}</span>
+      <span class="cc">${escapeHtml(r.cc)}</span>
+      <span class="meta">${escapeHtml(r.response||'')}</span>
+      <button class="copy" data-copy="${escapeHtml(r.cc)}">copy</button>
+    </div>`;
+  }).join('');
+}
+
+// ── Proxy view ──────────────────────────────────────────────────────────────
+function renderProxies() {
+  const live = state.proxies.filter(p => p.status==='live').length;
+  return `
+    <div class="stat-grid">
+      <div class="stat"><div class="label">Live</div><div class="value" style="color:var(--live)">${live}</div></div>
+      <div class="stat"><div class="label">Total</div><div class="value">${state.proxies.length}</div></div>
+      <div class="stat"><div class="label">Cap</div><div class="value">100</div><div class="sub">max live per user</div></div>
+      <div class="stat"><div class="label">Format</div><div class="value" style="font-size:14px;margin-top:4px">user:pass@host:port</div></div>
+    </div>
+    <div class="panel mb16">
+      <div class="panel-head"><span>Add Proxies</span></div>
+      <div class="panel-body">
+        <textarea id="proxies-bulk" placeholder="paste proxies, one per line" style="min-height:140px"></textarea>
+        <div class="row2" style="margin-top:10px">
+          <button class="btn btn-primary" id="proxies-add-btn">Validate & Add</button>
+          <button class="btn btn-danger" id="proxies-clear-btn">Clear All</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><span>Your Proxies</span><span class="count">${state.proxies.length}</span></div>
+      ${state.proxies.length===0 ? `<div class="empty">No proxies yet</div>` : `
+      <table class="table">
+        <thead><tr><th>Status</th><th>Proxy</th><th>Latency</th><th>Checked</th><th></th></tr></thead>
+        <tbody>
+        ${state.proxies.map(p=>`<tr>
+          <td>${p.status==='live'?'<span class="tag on">LIVE</span>':'<span class="tag off">DEAD</span>'}</td>
+          <td class="mono">${escapeHtml(p.proxy.length>50?p.proxy.slice(0,50)+'…':p.proxy)}</td>
+          <td class="mono">${p.latency?p.latency+'s':'—'}</td>
+          <td class="dim text-xs">${p.checked_at?p.checked_at.slice(0,19).replace('T',' '):''}</td>
+          <td class="actions"><button class="btn btn-sm btn-danger" data-del-proxy="${p.id}">×</button></td>
+        </tr>`).join('')}
+        </tbody>
+      </table>`}
+    </div>`;
+}
+
+// ── Hits view ───────────────────────────────────────────────────────────────
+async function renderHits() {
+  let hits = [];
+  try { hits = await api('/api/hits'); } catch(e){}
+  if (!hits.length) return `<div class="panel"><div class="empty">No charged hits yet</div></div>`;
+  return `
+    <div class="flex-between mb16">
+      <span class="text-xs dim">${hits.length} hits</span>
+      <button class="btn btn-sm btn-danger" id="hits-clear">Clear All</button>
+    </div>
+    <div class="panel">
+      <table class="table">
+        <thead><tr><th>Status</th><th>CC</th><th>Response</th><th>Amount</th><th>Gateway</th><th>Time</th><th></th></tr></thead>
+        <tbody>
+        ${hits.map(h=>`<tr>
+          <td><span class="badge live">CHARGED</span></td>
+          <td class="mono">${escapeHtml(h.cc)}</td>
+          <td class="dim">${escapeHtml(h.response||'')}</td>
+          <td class="mono">${h.amount?'$'+h.amount.toFixed(2):'—'}</td>
+          <td class="dim text-xs">${escapeHtml(h.gateway||'')}</td>
+          <td class="dim text-xs">${h.ts?h.ts.slice(0,19).replace('T',' '):''}</td>
+          <td class="actions"><button class="btn btn-sm btn-danger" data-del-hit="${h.id}">×</button></td>
+        </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+// ── Jobs view ───────────────────────────────────────────────────────────────
+async function renderJobs() {
+  let jobs = [];
+  try { jobs = await api('/api/jobs'); } catch(e){}
+  if (!jobs.length) return `<div class="panel"><div class="empty">No jobs yet</div></div>`;
+  return `<div class="panel">
+    <table class="table">
+      <thead><tr><th>ID</th><th>Name</th><th>Status</th><th>Progress</th><th>Live</th><th>Declined</th><th>Created</th><th></th></tr></thead>
+      <tbody>
+      ${jobs.map(j=>`<tr>
+        <td class="mono">${j.id}</td>
+        <td>${escapeHtml(j.name)}</td>
+        <td><span class="tag ${j.status==='done'?'on':(j.status==='running'?'pro':'off')}">${j.status.toUpperCase()}</span></td>
+        <td class="mono text-xs">${j.done}/${j.total}</td>
+        <td style="color:var(--live)">${j.live}</td>
+        <td style="color:var(--decl)">${j.declined}</td>
+        <td class="dim text-xs">${(j.created_at||'').slice(0,19).replace('T',' ')}</td>
+        <td class="actions"><button class="btn btn-sm" data-open-job="${j.id}">View</button></td>
+      </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+// ── Account view ────────────────────────────────────────────────────────────
+function renderAccount() {
+  const u = state.user;
+  return `
+    <div class="stat-grid">
+      <div class="stat"><div class="label">Plan</div><div class="value" style="font-size:18px;margin-top:4px">${planBadge(u.plan)}</div></div>
+      <div class="stat"><div class="label">Credits</div><div class="value">${u.credits}</div></div>
+      <div class="stat"><div class="label">Total Checks</div><div class="value">${u.total_checks}</div></div>
+      <div class="stat"><div class="label">Total Hits</div><div class="value" style="color:var(--live)">${u.total_hits}</div></div>
+    </div>
+    <div class="panel mb16">
+      <div class="panel-head"><span>Redeem Code</span></div>
+      <div class="panel-body">
+        <div class="row2">
+          <input id="redeem-input" placeholder="ERR0R-XXXXXX">
+          <button class="btn btn-primary" id="redeem-btn">Redeem</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><span>Profile</span></div>
+      <div class="panel-body">
+        <div class="field"><label>Email</label><input value="${escapeHtml(u.email)}" disabled></div>
+        <div class="field"><label>Plan Expires</label><input value="${u.plan_expires ? u.plan_expires.slice(0,10) : 'Never'}" disabled></div>
+        <div class="field"><label>Joined</label><input value="${(u.created_at||'').slice(0,10)}" disabled></div>
+      </div>
+    </div>`;
+}
+
+// ── Admin view ──────────────────────────────────────────────────────────────
+function renderAdmin() {
+  const tabs = ['users','apis','charged','codes','jobs','settings','notify','sites'];
+  return `
+    <div class="tabs" style="margin-bottom:16px;background:var(--panel);border:1px solid var(--line);padding:6px;border-radius:8px">
+      ${tabs.map(t=>`<div class="tab ${state.adminTab===t?'active':''}" data-atab="${t}">${titleCase(t)}</div>`).join('')}
+    </div>
+    <div id="admin-content"></div>`;
+}
+
+async function renderAdminTab() {
+  const el = document.getElementById('admin-content');
+  if (!el) return;
+  const t = state.adminTab;
+  el.innerHTML = '<div class="empty">Loading...</div>';
+  try {
+    if (t === 'users') {
+      const users = await api('/api/admin/users');
+      const stats = await api('/api/admin/stats');
+      el.innerHTML = `
+        <div class="stat-grid" style="grid-template-columns:repeat(4,1fr)">
+          <div class="stat"><div class="label">Users</div><div class="value">${stats.users}</div></div>
+          <div class="stat"><div class="label">Jobs</div><div class="value">${stats.jobs}</div></div>
+          <div class="stat"><div class="label">Total Hits</div><div class="value" style="color:var(--live)">${stats.hits}</div></div>
+          <div class="stat"><div class="label">APIs</div><div class="value">${stats.apis}</div></div>
+        </div>
+        <div class="panel mb16">
+          <div class="panel-head"><span>Create User</span></div>
+          <div class="panel-body">
+            <div class="row2">
+              <div class="field"><label>Email</label><input id="nu-email" placeholder="user@example.com"></div>
+              <div class="field"><label>Password</label><input id="nu-pass" placeholder="strong password"></div>
+            </div>
+            <div class="row2">
+              <div class="field"><label>Plan</label><select id="nu-plan">
+                ${['free','pro','premium','max','unlimited'].map(p=>`<option value="${p}">${p}</option>`).join('')}
+              </select></div>
+              <div class="field"><label>Credits</label><input id="nu-credits" type="number" value="50"></div>
+            </div>
+            <button class="btn btn-primary" id="nu-btn">Create User</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span>Users</span><span class="count">${users.length}</span></div>
+          <table class="table">
+            <thead><tr><th>ID</th><th>Email</th><th>Plan</th><th>Credits</th><th>Checks</th><th>Hits</th><th>Banned</th><th></th></tr></thead>
+            <tbody>
+            ${users.map(u=>`<tr>
+              <td class="mono">${u.id}${u.is_admin?' <span class="tag on">A</span>':''}</td>
+              <td class="mono text-xs">${escapeHtml(u.email)}</td>
+              <td>${planBadge(u.plan)}</td>
+              <td class="mono">${u.credits}</td>
+              <td class="mono text-xs">${u.total_checks}</td>
+              <td class="mono text-xs" style="color:var(--live)">${u.total_hits}</td>
+              <td>${u.banned?'<span class="tag off">YES</span>':'—'}</td>
+              <td class="actions">
+                <button class="btn btn-sm" data-edit-user="${u.id}">Edit</button>
+                ${!u.is_admin?`<button class="btn btn-sm btn-danger" data-del-user="${u.id}">×</button>`:''}
+              </td>
+            </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+      document.getElementById('nu-btn').onclick = createUser;
+      el.querySelectorAll('[data-edit-user]').forEach(b=>b.onclick=()=>openUserEdit(parseInt(b.dataset.editUser)));
+      el.querySelectorAll('[data-del-user]').forEach(b=>b.onclick=async()=>{
+        if (!confirm('Delete user?')) return;
+        await api('/api/admin/users/'+b.dataset.delUser, {method:'DELETE'});
+        toast('user deleted','ok'); renderAdminTab();
+      });
+    }
+
+    if (t === 'apis') {
+      const apis = await api('/api/admin/apis');
+      el.innerHTML = `
+        <div class="panel mb16">
+          <div class="panel-head"><span>Add API Endpoint</span></div>
+          <div class="panel-body">
+            <div class="row2">
+              <div class="field"><label>Name</label><input id="na-name" placeholder="default"></div>
+              <div class="field"><label>Style</label><select id="na-style">
+                <option value="params">params (?cc=...)</option>
+                <option value="raw">raw (.../shopify?cc...)</option>
+              </select></div>
+            </div>
+            <div class="field"><label>URL</label><input id="na-url" placeholder="http://host:8081/shopify"></div>
+            <div class="row2">
+              <div class="field"><label>Site Required</label><select id="na-site"><option value="0">No</option><option value="1">Yes</option></select></div>
+              <div class="field"><label>Cap</label><input id="na-cap" type="number" value="900"></div>
+            </div>
+            <div class="field"><label>Key (optional)</label><input id="na-key" placeholder=""></div>
+            <button class="btn btn-primary" id="na-btn">Add API</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span>APIs</span><span class="count">${apis.length}</span></div>
+          <table class="table">
+            <thead><tr><th>#</th><th>Name</th><th>URL</th><th>Style</th><th>Site</th><th>Cap</th><th>Enabled</th><th></th></tr></thead>
+            <tbody>
+            ${apis.map(a=>`<tr>
+              <td class="mono">${a.id}</td>
+              <td class="mono text-xs">${escapeHtml(a.name||'')}</td>
+              <td class="mono text-xs">${escapeHtml(a.url.length>50?a.url.slice(0,50)+'…':a.url)}</td>
+              <td class="dim text-xs">${a.style}</td>
+              <td>${a.site_required?'<span class="tag on">YES</span>':'—'}</td>
+              <td class="mono text-xs">${a.cap}</td>
+              <td><span class="tag ${a.enabled?'on':'off'}">${a.enabled?'ON':'OFF'}</span></td>
+              <td class="actions">
+                <button class="btn btn-sm" data-toggle-api="${a.id}" data-enabled="${a.enabled}">${a.enabled?'Off':'On'}</button>
+                <button class="btn btn-sm btn-danger" data-del-api="${a.id}">×</button>
+              </td>
+            </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+      document.getElementById('na-btn').onclick = async () => {
+        try {
+          await api('/api/admin/apis', {method:'POST', body: JSON.stringify({
+            name: document.getElementById('na-name').value,
+            url: document.getElementById('na-url').value,
+            style: document.getElementById('na-style').value,
+            site_required: parseInt(document.getElementById('na-site').value),
+            cap: parseInt(document.getElementById('na-cap').value),
+            api_key: document.getElementById('na-key').value,
+            enabled: 1,
+          })});
+          toast('api added','ok'); renderAdminTab();
+        } catch(e) { toast(e.message,'err'); }
+      };
+      el.querySelectorAll('[data-toggle-api]').forEach(b=>b.onclick=async()=>{
+        const a = apis.find(x=>x.id==b.dataset.toggleApi);
+        await api('/api/admin/apis/'+a.id, {method:'PUT', body: JSON.stringify({...a, enabled: a.enabled?0:1})});
+        renderAdminTab();
+      });
+      el.querySelectorAll('[data-del-api]').forEach(b=>b.onclick=async()=>{
+        if (!confirm('Delete API?')) return;
+        await api('/api/admin/apis/'+b.dataset.delApi, {method:'DELETE'});
+        renderAdminTab();
+      });
+    }
+
+    if (t === 'charged') {
+      const hits = await api('/api/admin/charged');
+      el.innerHTML = `
+        <div class="flex-between mb16">
+          <span class="text-xs dim">${hits.length} charged hits</span>
+          <button class="btn btn-sm btn-danger" id="ac-clear">Clear All</button>
+        </div>
+        <div class="panel">
+          <table class="table">
+            <thead><tr><th>User</th><th>CC</th><th>Response</th><th>Amount</th><th>Gateway</th><th>Time</th></tr></thead>
+            <tbody>
+            ${hits.map(h=>`<tr>
+              <td class="mono text-xs">${escapeHtml(h.user_email||'')}</td>
+              <td class="mono text-xs">${escapeHtml(h.cc)}</td>
+              <td class="dim text-xs">${escapeHtml(h.response||'')}</td>
+              <td class="mono">${h.amount?'$'+h.amount.toFixed(2):'—'}</td>
+              <td class="dim text-xs">${escapeHtml(h.gateway||'')}</td>
+              <td class="dim text-xs">${(h.ts||'').slice(0,19).replace('T',' ')}</td>
+            </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+      document.getElementById('ac-clear').onclick = async () => {
+        if (!confirm('Clear all charged?')) return;
+        await api('/api/admin/charged', {method:'DELETE'});
+        renderAdminTab();
+      };
+    }
+
+    if (t === 'codes') {
+      const codes = await api('/api/admin/codes');
+      el.innerHTML = `
+        <div class="panel mb16">
+          <div class="panel-head"><span>Generate Code</span></div>
+          <div class="panel-body">
+            <div class="row2">
+              <div class="field"><label>Plan</label><select id="nc-plan">
+                ${['free','pro','premium','max','unlimited'].map(p=>`<option value="${p}">${p}</option>`).join('')}
+              </select></div>
+              <div class="field"><label>Days</label><input id="nc-days" type="number" value="30"></div>
+            </div>
+            <div class="field"><label>Max Uses</label><input id="nc-uses" type="number" value="1"></div>
+            <button class="btn btn-primary" id="nc-btn">Generate</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span>Codes</span><span class="count">${codes.length}</span></div>
+          <table class="table">
+            <thead><tr><th>Code</th><th>Plan</th><th>Days</th><th>Used / Max</th><th></th></tr></thead>
+            <tbody>
+            ${codes.map(c=>`<tr>
+              <td class="mono">${c.code}</td>
+              <td>${planBadge(c.plan)}</td>
+              <td class="mono">${c.days}</td>
+              <td class="mono text-xs">${c.used} / ${c.max_uses}</td>
+              <td class="actions"><button class="btn btn-sm btn-danger" data-del-code="${c.code}">×</button></td>
+            </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+      document.getElementById('nc-btn').onclick = async () => {
+        try {
+          const r = await api('/api/admin/codes', {method:'POST', body: JSON.stringify({
+            plan: document.getElementById('nc-plan').value,
+            uses: parseInt(document.getElementById('nc-uses').value),
+            days: parseInt(document.getElementById('nc-days').value),
+          })});
+          toast('code: '+r.code, 'ok'); renderAdminTab();
+        } catch(e) { toast(e.message,'err'); }
+      };
+      el.querySelectorAll('[data-del-code]').forEach(b=>b.onclick=async()=>{
+        await api('/api/admin/codes/'+encodeURIComponent(b.dataset.delCode), {method:'DELETE'});
+        renderAdminTab();
+      });
+    }
+
+    if (t === 'jobs') {
+      const jobs = await api('/api/admin/jobs');
+      el.innerHTML = `
+        <div class="panel">
+          <table class="table">
+            <thead><tr><th>User</th><th>ID</th><th>Status</th><th>Progress</th><th>Live</th><th>Declined</th><th>Created</th></tr></thead>
+            <tbody>
+            ${jobs.map(j=>`<tr>
+              <td class="mono text-xs">${escapeHtml(j.user_email||'')}</td>
+              <td class="mono text-xs">${j.id}</td>
+              <td><span class="tag ${j.status==='done'?'on':(j.status==='running'?'pro':'off')}">${j.status}</span></td>
+              <td class="mono text-xs">${j.done}/${j.total}</td>
+              <td style="color:var(--live)" class="mono">${j.live}</td>
+              <td style="color:var(--decl)" class="mono">${j.declined}</td>
+              <td class="dim text-xs">${(j.created_at||'').slice(0,19).replace('T',' ')}</td>
+            </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+    }
+
+    if (t === 'settings') {
+      const s = await api('/api/admin/settings');
+      el.innerHTML = `
+        <div class="panel mb16">
+          <div class="panel-head"><span>Bot Forwarding</span></div>
+          <div class="panel-body">
+            <div class="field"><label>Bot Token</label><input id="s-bot" value="${escapeHtml(s.bot_token||'')}" placeholder="123456:ABC..."></div>
+            <div class="field"><label>Admin Chat ID</label><input id="s-chat" value="${escapeHtml(s.admin_chat_id||'')}" placeholder="-1001234567890"></div>
+            <div class="row2">
+              <div class="field"><label>Notify On Hit</label><select id="s-notify">
+                <option value="1"${s.notify_on_hit==='1'?' selected':''}>Yes</option>
+                <option value="0"${s.notify_on_hit==='0'?' selected':''}>No</option>
+              </select></div>
+              <div class="field"><label>Job Concurrency</label><input id="s-conc" type="number" value="${s.job_concurrency||15}"></div>
+            </div>
+            <div class="flex">
+              <button class="btn btn-primary" id="s-save">Save</button>
+              <button class="btn" id="s-test">Send Test</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span>System</span></div>
+          <div class="panel-body">
+            <div class="field"><label>Maintenance Mode</label><select id="s-maint">
+              <option value="0"${s.maintenance==='0'?' selected':''}>Off</option>
+              <option value="1"${s.maintenance==='1'?' selected':''}>On</option>
+            </select></div>
+            <button class="btn btn-primary" id="s-maint-save">Save</button>
+          </div>
+        </div>`;
+      document.getElementById('s-save').onclick = async () => {
+        try {
+          await api('/api/admin/settings', {method:'POST', body: JSON.stringify({key:'bot_token', value:document.getElementById('s-bot').value})});
+          await api('/api/admin/settings', {method:'POST', body: JSON.stringify({key:'admin_chat_id', value:document.getElementById('s-chat').value})});
+          await api('/api/admin/settings', {method:'POST', body: JSON.stringify({key:'notify_on_hit', value:document.getElementById('s-notify').value})});
+          await api('/api/admin/settings', {method:'POST', body: JSON.stringify({key:'job_concurrency', value:document.getElementById('s-conc').value})});
+          toast('saved','ok');
+        } catch(e){ toast(e.message,'err'); }
+      };
+      document.getElementById('s-test').onclick = async () => {
+        try { await api('/api/admin/bot/test', {method:'POST'}); toast('test sent','ok'); }
+        catch(e){ toast(e.message,'err'); }
+      };
+      document.getElementById('s-maint-save').onclick = async () => {
+        await api('/api/admin/settings', {method:'POST', body: JSON.stringify({key:'maintenance', value:document.getElementById('s-maint').value})});
+        toast('saved','ok');
+      };
+    }
+
+    if (t === 'notify') {
+      el.innerHTML = `
+        <div class="panel">
+          <div class="panel-head"><span>Send Notification</span></div>
+          <div class="panel-body">
+            <div class="field"><label>User ID (0 = all)</label><input id="n-user" type="number" value="0"></div>
+            <div class="field"><label>Message</label><textarea id="n-text" placeholder="Message to users..."></textarea></div>
+            <button class="btn btn-primary" id="n-send">Send</button>
+          </div>
+        </div>`;
+      document.getElementById('n-send').onclick = async () => {
+        try {
+          await api('/api/admin/notify', {method:'POST', body: JSON.stringify({
+            user_id: parseInt(document.getElementById('n-user').value)||0,
+            text: document.getElementById('n-text').value,
+          })});
+          toast('sent','ok');
+        } catch(e) { toast(e.message,'err'); }
+      };
+    }
+
+    if (t === 'sites') {
+      const sites = await api('/api/admin/sites');
+      el.innerHTML = `
+        <div class="panel mb16">
+          <div class="panel-head"><span>Add Site</span></div>
+          <div class="panel-body">
+            <div class="row2">
+              <input id="ns-url" placeholder="store.myshopify.com">
+              <button class="btn btn-primary" id="ns-btn">Add</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span>Sites</span><span class="count">${sites.length}</span></div>
+          <table class="table">
+            <thead><tr><th>#</th><th>URL</th><th></th></tr></thead>
+            <tbody>
+            ${sites.map(s=>`<tr><td class="mono">${s.id}</td><td class="mono text-xs">${escapeHtml(s.url)}</td><td class="actions"><button class="btn btn-sm btn-danger" data-del-site="${s.id}">×</button></td></tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+      document.getElementById('ns-btn').onclick = async () => {
+        await api('/api/admin/sites', {method:'POST', body: JSON.stringify({url: document.getElementById('ns-url').value})});
+        renderAdminTab();
+      };
+      el.querySelectorAll('[data-del-site]').forEach(b=>b.onclick=async()=>{
+        await api('/api/admin/sites/'+b.dataset.delSite, {method:'DELETE'});
+        renderAdminTab();
+      });
+    }
+  } catch(e) {
+    el.innerHTML = `<div class="empty">Error: ${escapeHtml(e.message)}</div>`;
+  }
+}
+
+// ── User edit modal ─────────────────────────────────────────────────────────
+async function openUserEdit(uid) {
+  const users = await api('/api/admin/users');
+  const u = users.find(x => x.id === uid);
+  if (!u) return;
+  state.modal = `
+    <div class="modal-bg" id="modal-bg">
+      <div class="modal">
+        <div class="modal-head"><h3>Edit ${escapeHtml(u.email)}</h3><button class="btn btn-sm" id="modal-close">×</button></div>
+        <div class="modal-body">
+          <div class="field"><label>Plan</label><select id="mu-plan">
+            ${['free','pro','premium','max','unlimited'].map(p=>`<option value="${p}"${u.plan===p?' selected':''}>${p}</option>`).join('')}
+          </select></div>
+          <div class="field"><label>Credits</label><input id="mu-credits" type="number" value="${u.credits}"></div>
+          <div class="field"><label>Banned</label><select id="mu-ban">
+            <option value="0"${!u.banned?' selected':''}>No</option>
+            <option value="1"${u.banned?' selected':''}>Yes</option>
+          </select></div>
+          <div class="field"><label>New Password (leave blank to keep)</label><input id="mu-pass" type="password" placeholder=""></div>
+          <button class="btn btn-primary btn-block" id="mu-save">Save</button>
+        </div>
+      </div>
+    </div>`;
+  render();
+}
+
+function bindModal() {
+  const bg = document.getElementById('modal-bg');
+  if (!bg) return;
+  document.getElementById('modal-close').onclick = () => { state.modal = null; render(); };
+  document.getElementById('mu-save').onclick = async () => {
+    const uid = parseInt(bg.querySelector('.modal-head h3').textContent.match(/\d+/)?.[0] || '0');
+    // extract uid differently — use current modal context; quick fix:
+    const users = await api('/api/admin/users');
+    // actually re-derive: we saved nothing. Let's just use the selected user by matching email.
+    // simpler: attach uid via dataset
+  };
+  // simpler: bind save properly
+  bg.addEventListener('click', e => { if (e.target === bg) { state.modal = null; render(); } });
+}
+
+// better user edit with uid stored
+async function openUserEditFixed(uid) {
+  const users = await api('/api/admin/users');
+  const u = users.find(x => x.id === uid);
+  if (!u) return;
+  state.modal = `
+    <div class="modal-bg" data-uid="${u.id}" id="modal-bg">
+      <div class="modal">
+        <div class="modal-head"><h3>Edit ${escapeHtml(u.email)}</h3><button class="btn btn-sm" id="modal-close">×</button></div>
+        <div class="modal-body">
+          <div class="field"><label>Plan</label><select id="mu-plan">
+            ${['free','pro','premium','max','unlimited'].map(p=>`<option value="${p}"${u.plan===p?' selected':''}>${p}</option>`).join('')}
+          </select></div>
+          <div class="field"><label>Credits</label><input id="mu-credits" type="number" value="${u.credits}"></div>
+          <div class="field"><label>Banned</label><select id="mu-ban">
+            <option value="0"${!u.banned?' selected':''}>No</option>
+            <option value="1"${u.banned?' selected':''}>Yes</option>
+          </select></div>
+          <div class="field"><label>New Password (leave blank to keep)</label><input id="mu-pass" type="password"></div>
+          <button class="btn btn-primary btn-block" id="mu-save">Save</button>
+        </div>
+      </div>
+    </div>`;
+  render();
+  const bg = document.getElementById('modal-bg');
+  document.getElementById('modal-close').onclick = () => { state.modal = null; render(); };
+  bg.addEventListener('click', e => { if (e.target === bg) { state.modal = null; render(); } });
+  document.getElementById('mu-save').onclick = async () => {
+    try {
+      const body = {
+        plan: document.getElementById('mu-plan').value,
+        credits: parseInt(document.getElementById('mu-credits').value),
+        banned: parseInt(document.getElementById('mu-ban').value),
+      };
+      const pass = document.getElementById('mu-pass').value;
+      if (pass) body.password = pass;
+      await api('/api/admin/users/' + uid, {method:'PUT', body: JSON.stringify(body)});
+      state.modal = null; render();
+      toast('user updated','ok');
+      setTimeout(renderAdminTab, 50);
+    } catch(e) { toast(e.message,'err'); }
+  };
+}
+openUserEdit = openUserEditFixed;
+
+// ── App binding ─────────────────────────────────────────────────────────────
+function bindApp() {
+  document.getElementById('logout-btn').onclick = logout;
+  document.getElementById('side-toggle')?.addEventListener('click', () => { state.sideOpen = !state.sideOpen; render(); });
+  document.getElementById('notif-btn').onclick = async () => {
+    state.notifOpen = true;
+    await loadNotifications();
+    const unread = state.notifications.filter(n=>!n.read);
+    if (unread.length) {
+      await api('/api/notifications/read', {method:'POST'});
+      state.notifications = state.notifications.map(n=>({...n, read:1}));
+    }
+    const body = state.notifications.length
+      ? state.notifications.map(n=>`<div style="padding:10px 0;border-bottom:1px solid var(--line);font-size:12px">${escapeHtml(n.text)}<div class="dim text-xs" style="margin-top:4px">${(n.ts||'').slice(0,19).replace('T',' ')}</div></div>`).join('')
+      : '<div class="empty">No notifications</div>';
+    state.modal = `<div class="modal-bg" id="modal-bg"><div class="modal"><div class="modal-head"><h3>Notifications</h3><button class="btn btn-sm" id="modal-close">×</button></div><div class="modal-body">${body}</div></div></div>`;
+    render();
+    document.getElementById('modal-close').onclick = () => { state.modal = null; render(); };
+    document.getElementById('modal-bg').addEventListener('click', e => { if (e.target.id === 'modal-bg') { state.modal = null; render(); } });
+  };
+
+  document.querySelectorAll('[data-nav]').forEach(el => el.onclick = () => setView(el.dataset.nav));
+  document.querySelectorAll('[data-atab]').forEach(el => el.onclick = () => { state.adminTab = el.dataset.atab; render(); renderAdminTab(); });
+  if (state.view === 'admin') renderAdminTab();
+
+  if (state.view === 'checker') bindChecker();
+  if (state.view === 'proxies') bindProxies();
+  if (state.view === 'hits') bindHits();
+  if (state.view === 'jobs') bindJobs();
+  if (state.view === 'account') bindAccount();
+}
+
+function bindChecker() {
+  const g = (id) => document.getElementById(id);
+  g('gen-bin')?.addEventListener('input', e => state.genBin = e.target.value);
+  g('gen-month')?.addEventListener('change', e => state.genMonth = e.target.value);
+  g('gen-year')?.addEventListener('change', e => state.genYear = e.target.value);
+  g('gen-cvv')?.addEventListener('input', e => state.genCvv = e.target.value);
+  g('gen-count')?.addEventListener('input', e => state.genCount = parseInt(e.target.value)||10);
+  g('cards-input')?.addEventListener('input', e => state.cardsInput = e.target.value);
+  g('checker-proxies')?.addEventListener('input', e => state.proxiesInput = e.target.value);
+
+  g('gen-btn').onclick = async () => {
+    try {
+      const r = await api('/api/cc/gen', {method:'POST', body: JSON.stringify({
+        bin: state.genBin, month: state.genMonth, year: state.genYear, cvv: state.genCvv, count: state.genCount
+      })});
+      const existing = state.cardsInput ? state.cardsInput.trim() + '\n' : '';
+      state.cardsInput = existing + r.cards.join('\n');
+      render();
+    } catch(e) { toast(e.message,'err'); }
+  };
+
+  g('validate-proxies-btn').onclick = async () => {
+    const raw = g('checker-proxies').value.trim();
+    if (!raw) return toast('paste proxies first','err');
+    const lines = raw.split(/[\s]+/).filter(Boolean);
+    g('validate-proxies-btn').disabled = true;
+    g('validate-proxies-btn').textContent = 'Testing...';
+    try {
+      const r = await api('/api/proxies/validate', {method:'POST', body: JSON.stringify({proxies: lines})});
+      toast(`tested ${r.tested}, live ${r.live}, dead ${r.dead}`, 'ok');
+      state.proxiesInput = '';
+      await loadProxies();
+      render();
+    } catch(e){ toast(e.message,'err'); g('validate-proxies-btn').disabled=false; g('validate-proxies-btn').textContent='Validate'; }
+  };
+  g('proxies-goto-btn').onclick = () => setView('proxies');
+
+  g('start-check-btn').onclick = async () => {
+    const cards = g('cards-input').value.split(/[\s]+/).filter(Boolean);
+    if (!cards.length) return toast('paste cards first','err');
+    try {
+      g('start-check-btn').disabled = true;
+      g('start-check-btn').textContent = '⏳ Starting...';
+      const r = await api('/api/check/start', {method:'POST', body: JSON.stringify({cards})});
+      state.jobId = r.job_id;
+      state.results = [];
+      toast(`job started: ${r.total} cards`, 'ok');
+      render();
+      startPolling(r.job_id);
+    } catch(e){
+      toast(e.message,'err');
+      g('start-check-btn').disabled=false;
+      g('start-check-btn').textContent = '▶ Start Checking';
+    }
+  };
+
+  document.querySelectorAll('[data-tab]').forEach(el => el.onclick = () => { state.tabFilter = el.dataset.tab; render(); });
+  document.querySelectorAll('[data-copy]').forEach(b => b.onclick = () => {
+    navigator.clipboard.writeText(b.dataset.copy);
+    toast('copied','ok');
+  });
+}
+
+function startPolling(jobId) {
+  stopPolling();
+  const tick = async () => {
+    try {
+      const r = await api('/api/jobs/' + jobId);
+      state.job = r.job;
+      state.results = r.cards.filter(c => c.status !== 'pending').map(c => ({
+        cc: c.cc, status: c.status, response: c.response, amount: c.amount, currency: c.currency
+      }));
+      await loadStats();
+      if (state.view === 'checker') {
+        // patch just results + start button
+        const list = document.getElementById('results-list');
+        if (list) list.innerHTML = renderResults();
+        const tabs = document.getElementById('result-tabs');
+        if (tabs) {
+          const t = state.tabFilter;
+          tabs.querySelectorAll('.tab').forEach(el => {
+            if (el.dataset.tab === t) el.classList.add('active');
+            else el.classList.remove('active');
+          });
+        }
+        const startBtn = document.getElementById('start-check-btn');
+        if (startBtn && state.job && state.job.status !== 'running' && state.job.status !== 'queued') {
+          startBtn.disabled = false;
+          startBtn.textContent = '▶ Start New Check';
+        }
+      }
+      if (state.job && (state.job.status === 'done')) {
+        stopPolling();
+        await loadStats();
+        toast('job complete', 'ok');
+        state.jobId = null;
+        render();
+      }
+    } catch(e) { stopPolling(); }
+  };
+  tick();
+  state.polling = setInterval(tick, 1500);
+}
+
+function stopPolling() {
+  if (state.polling) { clearInterval(state.polling); state.polling = null; }
+}
+
+function bindProxies() {
+  document.getElementById('proxies-add-btn').onclick = async () => {
+    const raw = document.getElementById('proxies-bulk').value.trim();
+    if (!raw) return toast('paste proxies','err');
+    const lines = raw.split(/\s+/).filter(Boolean);
+    document.getElementById('proxies-add-btn').disabled = true;
+    document.getElementById('proxies-add-btn').textContent = 'Testing...';
+    try {
+      const r = await api('/api/proxies/validate', {method:'POST', body: JSON.stringify({proxies: lines})});
+      toast(`tested ${r.tested}, live ${r.live}, dead ${r.dead}`, 'ok');
+      await loadProxies();
+      render();
+    } catch(e){ toast(e.message,'err'); }
+  };
+  document.getElementById('proxies-clear-btn').onclick = async () => {
+    if (!confirm('Clear all proxies?')) return;
+    await api('/api/proxies', {method:'DELETE'});
+    await loadProxies();
+    render();
+  };
+  document.querySelectorAll('[data-del-proxy]').forEach(b => b.onclick = async () => {
+    await api('/api/proxies/' + b.dataset.delProxy, {method:'DELETE'});
+    await loadProxies();
+    render();
+  });
+}
+
+function bindHits() {
+  document.getElementById('hits-clear')?.addEventListener('click', async () => {
+    if (!confirm('Clear all hits?')) return;
+    await api('/api/hits', {method:'DELETE'});
+    render();
+  });
+  document.querySelectorAll('[data-del-hit]').forEach(b => b.onclick = async () => {
+    await api('/api/hits/' + b.dataset.delHit, {method:'DELETE'});
+    render();
+  });
+}
+
+function bindJobs() {
+  document.querySelectorAll('[data-open-job]').forEach(b => b.onclick = async () => {
+    try {
+      const r = await api('/api/jobs/' + b.dataset.openJob);
+      const rows = r.cards.map(c => `<div style="display:grid;grid-template-columns:70px 1fr 1fr;gap:8px;padding:6px 0;border-bottom:1px solid var(--line);font-family:monospace;font-size:11px">
+        <span class="badge ${c.status==='charged'?'live':(c.status||'unknown')}">${(c.status||'').toUpperCase()}</span>
+        <span>${escapeHtml(c.cc)}</span>
+        <span class="dim">${escapeHtml(c.response||'')}</span>
+      </div>`).join('');
+      state.modal = `<div class="modal-bg" id="modal-bg"><div class="modal"><div class="modal-head"><h3>Job ${r.job.id}</h3><button class="btn btn-sm" id="modal-close">×</button></div><div class="modal-body">${rows||'<div class="empty">No cards</div>'}</div></div></div>`;
+      render();
+      document.getElementById('modal-close').onclick = () => { state.modal = null; render(); };
+      document.getElementById('modal-bg').addEventListener('click', e => { if (e.target.id === 'modal-bg') { state.modal = null; render(); } });
+    } catch(e) { toast(e.message,'err'); }
+  });
+}
+
+function bindAccount() {
+  document.getElementById('redeem-btn')?.addEventListener('click', async () => {
+    const code = document.getElementById('redeem-input').value.trim();
+    if (!code) return toast('enter code','err');
+    try {
+      const r = await api('/api/redeem', {method:'POST', body: JSON.stringify({code})});
+      toast(`redeemed: ${r.plan} for ${r.days} days`, 'ok');
+      state.user = await api('/api/me');
+      render();
+    } catch(e){ toast(e.message,'err'); }
+  });
+}
+
+async function createUser() {
+  try {
+    await api('/api/admin/users', {method:'POST', body: JSON.stringify({
+      email: document.getElementById('nu-email').value,
+      password: document.getElementById('nu-pass').value,
+      plan: document.getElementById('nu-plan').value,
+      credits: parseInt(document.getElementById('nu-credits').value),
+    })});
+    toast('user created','ok');
+    renderAdminTab();
+  } catch(e){ toast(e.message,'err'); }
+}
+
+// ── boot ────────────────────────────────────────────────────────────────────
+(async () => {
+  if (state.token) {
+    try { await bootstrap(); } catch(e) { state.token=''; localStorage.removeItem('ez_token'); render(); }
+  } else {
+    render();
+  }
+})();
+</script>
+</body>
+</html>
