@@ -1,0 +1,1466 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>𒉼 𝔢 𝔯 𝔯 𝔬 𝔯 乙 · WEB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080808;--panel:#0e0e0e;--panel2:#141414;--panel3:#1a1a1a;
+  --line:#1c1c1c;--line2:#242424;--line3:#2e2e2e;
+  --text:#eaeaea;--muted:#858585;--dim:#525252;
+  --live:#3ddc84;--decl:#ff4757;--warn:#f7b731;--otp:#4d9eff;--charged:#7ff0a8;
+  --radius:12px;--radius-sm:8px;--radius-lg:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:13.5px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;overflow-x:hidden}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea,select{font:inherit;background:var(--panel2);border:1px solid var(--line2);color:var(--text);border-radius:var(--radius-sm);padding:10px 12px;width:100%;outline:none;transition:all .15s}
+input:focus,textarea:focus,select:focus{border-color:var(--line3);background:var(--panel3)}
+textarea{resize:vertical;min-height:110px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.5}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-thumb{background:#262626;border-radius:8px}
+::-webkit-scrollbar-track{background:transparent}
+code,.mono{font-family:'JetBrains Mono',monospace}
+
+/* layout */
+.app{display:grid;grid-template-columns:228px 1fr;min-height:100vh}
+.sidebar{background:#060606;border-right:1px solid var(--line);padding:24px 0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:0 24px 24px;font-size:13px;letter-spacing:3px;font-weight:600;color:#fff;line-height:1.2}
+.brand small{display:block;color:var(--dim);font-size:9.5px;letter-spacing:1.5px;margin-top:6px;font-weight:400}
+.nav-group{margin-bottom:16px}
+.nav-label{padding:0 24px 8px;font-size:9.5px;letter-spacing:1.5px;color:var(--dim);text-transform:uppercase;font-weight:600}
+.nav-item{display:flex;align-items:center;gap:11px;padding:10px 24px;color:var(--muted);font-size:13px;cursor:pointer;transition:all .12s;border-left:2px solid transparent;font-weight:500}
+.nav-item:hover{color:#cfcfcf;background:#0d0d0d}
+.nav-item.active{color:#fff;background:#111;border-left-color:#fff}
+.nav-item .ic{font-size:13px;width:16px;text-align:center;opacity:.65;font-weight:400}
+.nav-item.active .ic{opacity:1}
+.sidebar-footer{margin-top:auto;padding:16px 24px;border-top:1px solid var(--line);font-size:11px;color:var(--dim)}
+.sidebar-footer .email{color:var(--text);font-weight:500;font-size:12px;word-break:break-all;margin-bottom:8px}
+.sidebar-footer .tags{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+
+.main{padding:28px 34px;min-width:0;max-width:100%}
+.page-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:26px;flex-wrap:wrap;gap:14px}
+.page-head .title-block{flex:1;min-width:0}
+.page-head .crumb{font-size:10px;color:var(--dim);letter-spacing:1.5px;margin-bottom:7px;text-transform:uppercase;font-weight:500}
+.page-head h1{font-size:24px;font-weight:700;letter-spacing:-.5px;line-height:1.1}
+
+/* stats */
+.stat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:22px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;position:relative;overflow:hidden}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--line2)}
+.stat.charged::before{background:linear-gradient(90deg,var(--charged),transparent)}
+.stat.nsf::before{background:linear-gradient(90deg,var(--live),transparent)}
+.stat.otp::before{background:linear-gradient(90deg,var(--otp),transparent)}
+.stat.declined::before{background:linear-gradient(90deg,var(--decl),transparent)}
+.stat.errors::before{background:linear-gradient(90deg,var(--warn),transparent)}
+.stat .label{font-size:9.5px;letter-spacing:1.2px;color:var(--muted);text-transform:uppercase;margin-bottom:7px;font-weight:600}
+.stat .value{font-size:24px;font-weight:700;letter-spacing:-.6px;line-height:1;font-variant-numeric:tabular-nums}
+.stat .sub{font-size:10.5px;color:var(--dim);margin-top:5px}
+
+/* panels */
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.panel-head{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;border-bottom:1px solid var(--line);font-size:10.5px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;font-weight:600}
+.panel-head .count{color:var(--dim);font-size:10px;font-weight:500;letter-spacing:.5px;text-transform:none}
+.panel-body{padding:18px}
+
+/* forms */
+.field{margin-bottom:12px}
+.field label{display:block;font-size:9.5px;letter-spacing:1.2px;color:var(--dim);text-transform:uppercase;margin-bottom:6px;font-weight:600}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 16px;border-radius:var(--radius-sm);font-size:12.5px;font-weight:600;letter-spacing:.2px;transition:all .12s;border:1px solid var(--line2);background:var(--panel2);color:#ddd;white-space:nowrap}
+.btn:hover{background:var(--panel3);border-color:var(--line3)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-primary{background:#f5f5f5;color:#080808;border-color:#f5f5f5}
+.btn-primary:hover{background:#fff;border-color:#fff}
+.btn-danger{color:var(--decl);border-color:#3a1a1c;background:rgba(255,71,87,.04)}
+.btn-danger:hover{background:rgba(255,71,87,.1)}
+.btn-sm{padding:6px 11px;font-size:11px;font-weight:600}
+.btn-block{width:100%}
+.btn-ghost{background:transparent;border-color:transparent;color:var(--muted)}
+.btn-ghost:hover{background:var(--panel2);color:#ddd}
+
+/* tabs */
+.tabs{display:flex;gap:2px;padding:6px;flex-wrap:wrap}
+.tab{padding:7px 13px;font-size:11.5px;color:var(--muted);border-radius:6px;letter-spacing:.2px;cursor:pointer;font-weight:500;transition:all .12s;white-space:nowrap}
+.tab:hover{background:var(--panel2);color:#bbb}
+.tab.active{background:var(--panel3);color:#fff}
+.tab .n{color:var(--dim);margin-left:5px;font-size:10px;font-weight:600}
+.tab.active .n{color:#888}
+.tab .n.charged{color:var(--charged)}
+.tab .n.nsf{color:var(--live)}
+.tab .n.otp{color:var(--otp)}
+.tab .n.declined{color:var(--decl)}
+.tab .n.errors{color:var(--warn)}
+
+/* checker */
+.checker-grid{display:grid;grid-template-columns:360px 1fr;gap:16px;align-items:start}
+.left-col{display:flex;flex-direction:column;gap:14px}
+
+/* results */
+.results-list{max-height:680px;overflow-y:auto}
+.result{display:grid;grid-template-columns:76px 1fr auto;gap:10px;align-items:center;padding:11px 16px;border-bottom:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:11.5px;transition:background .1s}
+.result:last-child{border-bottom:none}
+.result:hover{background:var(--panel2)}
+.result .badge{padding:3px 8px;border-radius:4px;font-size:9px;font-weight:700;letter-spacing:.8px;text-align:center;font-family:'Inter',sans-serif}
+.badge.charged{background:rgba(127,240,168,.15);color:var(--charged)}
+.badge.nsf{background:rgba(61,220,132,.12);color:var(--live)}
+.badge.otp{background:rgba(77,158,255,.12);color:var(--otp)}
+.badge.declined{background:rgba(255,71,87,.12);color:var(--decl)}
+.badge.error{background:rgba(247,183,49,.12);color:var(--warn)}
+.result .cc{color:#d0d0d0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;flex-direction:column;gap:2px}
+.result .cc-main{color:#e0e0e0}
+.result .cc-bin{color:var(--dim);font-size:10px;font-family:'Inter',sans-serif}
+.result .actions{display:flex;gap:4px;opacity:0;transition:opacity .1s}
+.result:hover .actions{opacity:1}
+.icon-btn{width:26px;height:26px;border-radius:5px;border:1px solid var(--line2);background:var(--panel3);color:var(--muted);font-size:11px;display:flex;align-items:center;justify-content:center;transition:all .1s}
+.icon-btn:hover{color:#fff;background:var(--panel2);border-color:var(--line3)}
+
+.empty{padding:60px 20px;text-align:center;color:var(--dim);font-size:12.5px}
+.empty .big{font-size:32px;opacity:.3;margin-bottom:12px}
+
+/* table */
+.table{width:100%;border-collapse:collapse;font-size:12px}
+.table th{text-align:left;padding:11px 14px;font-size:9.5px;letter-spacing:1.2px;color:var(--dim);text-transform:uppercase;font-weight:600;border-bottom:1px solid var(--line);background:#0a0a0a}
+.table td{padding:11px 14px;border-bottom:1px solid var(--line);color:#ccc;vertical-align:middle}
+.table tr:last-child td{border-bottom:none}
+.table tr:hover td{background:#0f0f0f}
+.table .mono{font-family:'JetBrains Mono',monospace;color:#a5a5a5;font-size:11px}
+.table .actions{display:flex;gap:4px;justify-content:flex-end}
+
+.tag{display:inline-block;padding:3px 9px;border-radius:5px;font-size:9.5px;letter-spacing:.6px;font-weight:600;text-transform:uppercase}
+.tag.free{background:#1a1a1a;color:#888}
+.tag.pro{background:rgba(61,220,132,.1);color:var(--live)}
+.tag.premium{background:rgba(77,158,255,.1);color:var(--otp)}
+.tag.max{background:rgba(247,183,49,.1);color:var(--warn)}
+.tag.unlimited{background:rgba(255,71,87,.1);color:var(--decl)}
+.tag.on{background:rgba(61,220,132,.12);color:var(--live)}
+.tag.off{background:rgba(120,120,120,.12);color:#777}
+.tag.live{background:rgba(61,220,132,.12);color:var(--live)}
+.tag.cooldown{background:rgba(247,183,49,.12);color:var(--warn)}
+.tag.down{background:rgba(255,71,87,.12);color:var(--decl)}
+
+/* auth */
+.auth-wrap{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(ellipse at top,#131313 0%,#080808 55%)}
+.auth-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-lg);padding:38px 34px;width:100%;max-width:400px}
+.auth-card h1{font-size:17px;letter-spacing:5px;font-weight:700;text-align:center;margin-bottom:6px}
+.auth-card .sub{text-align:center;color:var(--dim);font-size:10px;letter-spacing:2px;margin-bottom:30px;text-transform:uppercase;font-weight:500}
+
+/* modal */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;z-index:100}
+.modal{background:var(--panel);border:1px solid var(--line2);border-radius:var(--radius-lg);width:100%;max-width:640px;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.modal.wide{max-width:820px}
+.modal-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--panel);z-index:2}
+.modal-head h3{font-size:14px;font-weight:600;letter-spacing:.3px}
+.modal-body{padding:22px}
+
+/* toast */
+.toast{position:fixed;bottom:22px;right:22px;background:var(--panel3);border:1px solid var(--line3);border-radius:9px;padding:12px 18px;font-size:12.5px;color:#eee;z-index:1000;animation:slideIn .22s ease;box-shadow:0 8px 24px rgba(0,0,0,.4);font-weight:500}
+.toast.err{border-color:#4a1a1c;color:#ff8a8a;background:#1a0e0f}
+.toast.ok{border-color:#1a4a2c;color:#8affb0;background:#0f1a14}
+@keyframes slideIn{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* misc */
+.progress{height:3px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:8px}
+.progress .bar{height:100%;background:linear-gradient(90deg,#f5f5f5,#888);transition:width .4s ease}
+.pill-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.pill{padding:4px 10px;border-radius:20px;background:var(--panel2);border:1px solid var(--line2);font-size:10px;color:var(--muted);letter-spacing:.4px;font-weight:500}
+.pill.ok{color:var(--live);border-color:#153a25;background:rgba(61,220,132,.04)}
+.pill.bad{color:var(--decl);border-color:#3a1518;background:rgba(255,71,87,.04)}
+.pill.warn{color:var(--warn);border-color:#3a2a15;background:rgba(247,183,49,.04)}
+
+.file-drop{border:1.5px dashed var(--line3);border-radius:var(--radius-sm);padding:16px;text-align:center;cursor:pointer;transition:all .15s;background:var(--panel2)}
+.file-drop:hover{border-color:#3a3a3a;background:var(--panel3)}
+.file-drop .label{font-size:11px;color:var(--muted);letter-spacing:.4px}
+.file-drop .sub{font-size:10px;color:var(--dim);margin-top:4px}
+
+.kbd{background:var(--panel3);border:1px solid var(--line2);border-radius:4px;padding:1px 6px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted)}
+
+pre.pretty{background:#0a0a0a;border:1px solid var(--line2);border-radius:var(--radius-sm);padding:14px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.6;overflow-x:auto;color:#b8b8b8;white-space:pre-wrap;word-break:break-all}
+pre.pretty .key{color:var(--otp)}
+pre.pretty .str{color:var(--live)}
+pre.pretty .num{color:var(--warn)}
+pre.pretty .bool{color:var(--decl)}
+pre.pretty .null{color:var(--dim)}
+
+.bin-card{background:var(--panel2);border:1px solid var(--line2);border-radius:var(--radius-sm);padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bin-item .k{font-size:9.5px;color:var(--dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;font-weight:600}
+.bin-item .v{font-size:13px;color:var(--text);font-weight:500}
+
+.mobile-toggle{display:none;background:var(--panel2);border:1px solid var(--line2);border-radius:7px;padding:8px 11px;font-size:15px;line-height:1;color:var(--text)}
+
+@media (max-width:920px){
+  .app{grid-template-columns:1fr}
+  .sidebar{position:fixed;left:0;top:0;bottom:0;width:250px;z-index:50;transform:translateX(-100%);transition:transform .22s;box-shadow:20px 0 60px rgba(0,0,0,.5)}
+  .sidebar.open{transform:translateX(0)}
+  .main{padding:18px 16px}
+  .stat-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+  .stat{padding:12px 13px}
+  .stat .value{font-size:20px}
+  .checker-grid{grid-template-columns:1fr}
+  .row2,.row3{grid-template-columns:1fr}
+  .mobile-toggle{display:inline-flex}
+  .result{grid-template-columns:66px 1fr auto;gap:8px;padding:10px 12px}
+  .page-head h1{font-size:20px}
+  .bin-card{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script>
+const API = '';
+const state = {
+  token: localStorage.getItem('ez_token') || '',
+  user: null,
+  view: 'checker',
+  stats: {total:0,charged:0,nsf:0,otp:0,declined:0,errors:0},
+  proxies: [],
+  jobId: null,
+  job: null,
+  results: [],
+  tabFilter: 'all',
+  genBin:'4', genMonth:'random', genYear:'random', genCvv:'random', genCount:10,
+  cardsInput: '',
+  proxiesInput: '',
+  adminTab: 'users',
+  adminCache: {},
+  polling: null,
+  modal: null,
+  notifications: [],
+  sideOpen: false,
+  binCache: {},
+};
+const esc = s => String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+async function api(path, opts={}) {
+  const headers = {'Content-Type':'application/json', ...(opts.headers||{})};
+  if (state.token) headers['Authorization'] = 'Bearer ' + state.token;
+  const res = await fetch(API+path, {...opts, headers});
+  if (res.status === 401) { logout(); throw new Error('unauth'); }
+  if (!res.ok) {
+    const e = await res.json().catch(()=>({detail:'error'}));
+    throw new Error(typeof e.detail === 'string' ? e.detail : JSON.stringify(e.detail));
+  }
+  return res.json();
+}
+
+function toast(msg, type='') {
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(), 3200);
+}
+
+function logout() {
+  state.token = ''; state.user = null;
+  localStorage.removeItem('ez_token');
+  stopPolling();
+  render();
+}
+
+function setView(v) { state.view = v; state.sideOpen = false; if (v!=='checker') stopPolling(); render(); }
+
+function titleCase(s) { return s.charAt(0).toUpperCase()+s.slice(1); }
+function planBadge(p) { return `<span class="tag ${p||'free'}">${(p||'free').toUpperCase()}</span>`; }
+
+// ── render ──────────────────────────────────────────────────────────────────
+function render() {
+  const root = document.getElementById('root');
+  if (!state.token || !state.user) {
+    root.innerHTML = renderAuth();
+    bindAuth();
+    return;
+  }
+  root.innerHTML = renderApp();
+  bindApp();
+  if (state.modal) {
+    root.innerHTML += state.modal;
+    bindModal();
+  }
+}
+
+function renderAuth() {
+  return `
+    <div class="auth-wrap">
+      <div class="auth-card">
+        <h1>𒉼 𝔢 𝔯 𝔯 𝔬 𝔯 乙</h1>
+        <div class="sub">☞ WEB ☜</div>
+        <div class="field"><label>Email</label><input id="auth-email" type="email" placeholder="you@example.com"></div>
+        <div class="field"><label>Password</label><input id="auth-pass" type="password" placeholder="••••••••"></div>
+        <button id="auth-btn" class="btn btn-primary btn-block" style="margin-top:12px">Sign In</button>
+        <div style="text-align:center;color:var(--dim);font-size:10.5px;margin-top:18px;letter-spacing:.5px">accounts created by admin only</div>
+      </div>
+    </div>`;
+}
+
+function bindAuth() {
+  const btn = document.getElementById('auth-btn');
+  const submit = async () => {
+    const email = document.getElementById('auth-email').value.trim();
+    const password = document.getElementById('auth-pass').value;
+    if (!email || !password) return toast('fill all fields','err');
+    btn.disabled = true; btn.textContent = 'Signing in...';
+    try {
+      const r = await api('/api/auth/login', {method:'POST', body: JSON.stringify({email, password})});
+      state.token = r.token; state.user = r.user;
+      localStorage.setItem('ez_token', r.token);
+      await bootstrap();
+    } catch(e) { toast(e.message,'err'); btn.disabled=false; btn.textContent='Sign In'; }
+  };
+  btn.onclick = submit;
+  document.getElementById('auth-pass').addEventListener('keydown', e => { if (e.key==='Enter') submit(); });
+}
+
+async function bootstrap() {
+  try {
+    state.user = await api('/api/me');
+    await Promise.all([loadStats(), loadProxies(), loadNotifications()]);
+    setView('checker');
+  } catch(e) { toast(e.message,'err'); }
+}
+
+async function loadStats() { try { state.stats = await api('/api/stats'); } catch(e){} }
+async function loadProxies() { try { state.proxies = await api('/api/proxies'); } catch(e){ state.proxies=[]; } }
+async function loadNotifications() { try { state.notifications = await api('/api/notifications'); } catch(e){ state.notifications=[]; } }
+
+function navItem(id, label, icon) {
+  return `<div class="nav-item ${state.view===id?'active':''}" data-nav="${id}"><span class="ic">${icon}</span>${label}</div>`;
+}
+
+function renderApp() {
+  const isAdmin = state.user.is_admin;
+  const unread = state.notifications.filter(n=>!n.read).length;
+  return `
+    <div class="app">
+      <aside class="sidebar ${state.sideOpen?'open':''}">
+        <div class="brand">𒉼 𝔢 𝔯 𝔯 𝔬 𝔯 乙<small>☞ WEB ☜</small></div>
+        <div class="nav-group">
+          <div class="nav-label">Main</div>
+          ${navItem('checker','Checker','◆')}
+          ${navItem('proxies','Proxies','◇')}
+          ${navItem('hits','My Hits','●')}
+          ${navItem('jobs','Jobs','▤')}
+          ${navItem('account','Account','○')}
+        </div>
+        ${isAdmin ? `
+        <div class="nav-group">
+          <div class="nav-label">Admin</div>
+          ${navItem('admin','Panel','⚙')}
+        </div>` : ''}
+        <div class="sidebar-footer">
+          <div class="email">${esc(state.user.email)}</div>
+          <div class="tags">${planBadge(state.user.plan)}${isAdmin?'<span class="tag on">ADMIN</span>':''}</div>
+          <button class="btn btn-sm btn-danger btn-block" id="logout-btn">Sign out</button>
+        </div>
+      </aside>
+      <main class="main">
+        <div class="page-head">
+          <div class="title-block">
+            <div style="display:flex;align-items:center;gap:10px">
+              <button class="mobile-toggle" id="side-toggle">☰</button>
+              <div class="crumb">${esc(state.user.email)} / ${titleCase(state.view)}</div>
+            </div>
+            <h1>${titleCase(state.view)}</h1>
+          </div>
+          <button class="btn btn-sm" id="notif-btn">🔔${unread?' '+unread:''}</button>
+        </div>
+        <div id="view-content">${renderView()}</div>
+      </main>
+    </div>`;
+}
+
+function renderView() {
+  switch (state.view) {
+    case 'checker': return renderChecker();
+    case 'proxies': return renderProxies();
+    case 'hits': return renderHits();
+    case 'jobs': return renderJobs();
+    case 'account': return renderAccount();
+    case 'admin': return renderAdmin();
+  }
+  return '';
+}
+
+// ── Checker ────────────────────────────────────────────────────────────────
+function renderChecker() {
+  const live = state.proxies.filter(p=>p.status==='live').length;
+  const cardCount = (state.cardsInput||'').split(/[\s,]+/).filter(c=>c.includes('|')).length;
+  const s = state.stats;
+  return `
+    <div class="stat-grid">
+      <div class="stat"><div class="label">Total Checked</div><div class="value">${s.total}</div><div class="sub">all jobs</div></div>
+      <div class="stat charged"><div class="label">Charged</div><div class="value" style="color:var(--charged)">${s.charged}</div><div class="sub">${s.total?Math.round(s.charged/s.total*100):0}%</div></div>
+      <div class="stat nsf"><div class="label">Insufficient Funds</div><div class="value" style="color:var(--live)">${s.nsf}</div><div class="sub">${s.total?Math.round(s.nsf/s.total*100):0}%</div></div>
+      <div class="stat declined"><div class="label">Declined</div><div class="value" style="color:var(--decl)">${s.declined}</div><div class="sub">${s.total?Math.round(s.declined/s.total*100):0}%</div></div>
+      <div class="stat otp"><div class="label">3DS</div><div class="value" style="color:var(--otp)">${s.otp}</div><div class="sub">${s.total?Math.round(s.otp/s.total*100):0}%</div></div>
+    </div>
+
+    <div class="checker-grid">
+      <div class="left-col">
+        <div class="panel">
+          <div class="panel-head"><span>Proxies</span><span class="count">${live} live</span></div>
+          <div class="panel-body">
+            ${live===0?`<div class="pill warn" style="margin-bottom:10px">⚠ no live proxies — add before checking</div>`:''}
+            <textarea id="checker-proxies" placeholder="user:pass@host:port&#10;host:port:user:pass">${state.proxiesInput}</textarea>
+            <div class="file-drop" style="margin-top:8px" id="proxies-file-drop">
+              <div class="label">drop .txt or click to upload</div>
+              <div class="sub">one proxy per line</div>
+              <input type="file" id="proxies-file" accept=".txt" style="display:none">
+            </div>
+            <div class="row2" style="margin-top:10px">
+              <button class="btn btn-sm" id="validate-proxies-btn">Validate</button>
+              <button class="btn btn-sm btn-ghost" id="proxies-goto-btn">Manage</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><span>CC Generator</span></div>
+          <div class="panel-body">
+            <div class="field"><label>BIN (6-16 digits)</label><input id="gen-bin" value="${state.genBin}" placeholder="4"></div>
+            <div class="row2">
+              <div class="field"><label>Month</label><select id="gen-month">
+                <option value="random">Random</option>
+                ${Array.from({length:12},(_,i)=>{const m=String(i+1).padStart(2,'0');return `<option value="${m}"${state.genMonth===m?' selected':''}>${m}</option>`}).join('')}
+              </select></div>
+              <div class="field"><label>Year</label><select id="gen-year">
+                <option value="random">Random</option>
+                ${Array.from({length:10},(_,i)=>{const y=String(26+i);return `<option value="${y}"${state.genYear===y?' selected':''}>20${y}</option>`}).join('')}
+              </select></div>
+            </div>
+            <div class="row2">
+              <div class="field"><label>CVV</label><input id="gen-cvv" value="${state.genCvv}" placeholder="random"></div>
+              <div class="field"><label>Quantity</label><input id="gen-count" type="number" value="${state.genCount}" min="1" max="500"></div>
+            </div>
+            <button class="btn btn-block" id="gen-btn">Generate</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><span>Card Input</span><span class="count">${cardCount} cards</span></div>
+          <div class="panel-body">
+            <textarea id="cards-input" placeholder="4111111111111111|12|30|123" style="min-height:150px">${state.cardsInput}</textarea>
+            <div class="file-drop" style="margin-top:8px" id="cards-file-drop">
+              <div class="label">drop .txt or click to upload</div>
+              <div class="sub">one card per line</div>
+              <input type="file" id="cards-file" accept=".txt" style="display:none">
+            </div>
+            <div class="progress" style="margin-top:12px"><div class="bar" style="width:${state.job?Math.round((state.job.done/state.job.total)*100):0}%"></div></div>
+            <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:10.5px;color:var(--dim)">
+              <span>${state.job ? (state.job.phase==='retrying'?'Retrying errors...':'Running...') : 'Ready'}</span>
+              <span>${state.job ? `${state.job.done}/${state.job.total}` : ''}</span>
+            </div>
+            <button class="btn btn-primary btn-block" id="start-check-btn" style="margin-top:12px" ${state.jobId?'disabled':''}>
+              ${state.jobId?'⏳ Processing...':'▶ Start Checking'}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="min-height:680px;display:flex;flex-direction:column">
+        <div class="tabs" id="result-tabs" style="border-bottom:1px solid var(--line)">
+          ${['all','charged','nsf','otp','declined','error'].map(t=>{
+            const cnt = {all:state.results.length, charged:0, nsf:0, otp:0, declined:0, error:0};
+            state.results.forEach(r=>{ if (cnt[r.status]!==undefined) cnt[r.status]++; });
+            const label = {all:'All', charged:'Charged', nsf:'NSF', otp:'3DS', declined:'Declined', error:'Errors'}[t];
+            return `<div class="tab ${state.tabFilter===t?'active':''}" data-tab="${t}">${label}<span class="n ${t}">${cnt[t]||''}</span></div>`;
+          }).join('')}
+        </div>
+        <div class="results-list" id="results-list" style="flex:1">${renderResults()}</div>
+      </div>
+    </div>`;
+}
+
+function renderResults() {
+  let list = state.results;
+  if (state.tabFilter !== 'all') list = list.filter(r=>r.status===state.tabFilter);
+  if (!list.length) return `<div class="empty"><div class="big">◌</div>no results yet</div>`;
+  return list.map(r => {
+    const status = r.status === 'nsf' ? 'nsf' : r.status;
+    const label = {charged:'CHARGED', nsf:'NSF', otp:'3DS', declined:'DECLINED', error:'ERROR'}[status] || status.toUpperCase();
+    const binLine = r.bin_bank ? `<span class="cc-bin">${esc(r.bin_flag||'')} ${esc(r.bin_bank||'')}${r.bin_country?' · '+esc(r.bin_country):''}${r.bin_type?' · '+esc(r.bin_type):''}</span>` : '';
+    return `<div class="result" data-card-id="${r.id||''}">
+      <span class="badge ${status}">${label}</span>
+      <span class="cc">
+        <span class="cc-main">${esc(r.cc)}</span>
+        ${binLine}
+      </span>
+      <span class="actions">
+        <button class="icon-btn" title="response" data-raw="${esc(r.raw||'')}">⌗</button>
+        <button class="icon-btn" title="bin" data-bin="${esc(r.cc.split('|')[0].slice(0,8))}">◐</button>
+        <button class="icon-btn" title="copy" data-copy="${esc(r.cc)}">⧉</button>
+      </span>
+    </div>`;
+  }).join('');
+}
+
+// ── Proxies ────────────────────────────────────────────────────────────────
+function renderProxies() {
+  const live = state.proxies.filter(p=>p.status==='live').length;
+  return `
+    <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="stat"><div class="label">Live</div><div class="value" style="color:var(--live)">${live}</div></div>
+      <div class="stat"><div class="label">Total</div><div class="value">${state.proxies.length}</div></div>
+      <div class="stat"><div class="label">Format</div><div class="value" style="font-size:13px;margin-top:6px;font-family:monospace">host:port:user:pass</div></div>
+    </div>
+    <div class="panel" style="margin-bottom:16px">
+      <div class="panel-head"><span>Add Proxies</span></div>
+      <div class="panel-body">
+        <textarea id="proxies-bulk" placeholder="paste proxies, one per line"></textarea>
+        <div class="file-drop" style="margin-top:10px" id="proxies-bulk-drop">
+          <div class="label">drop .txt or click to upload</div>
+          <input type="file" id="proxies-bulk-file" accept=".txt" style="display:none">
+        </div>
+        <div class="row2" style="margin-top:10px">
+          <button class="btn btn-primary" id="proxies-add-btn">Validate & Add</button>
+          <button class="btn btn-danger" id="proxies-clear-btn">Clear All</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><span>Your Proxies</span><span class="count">${state.proxies.length}</span></div>
+      ${state.proxies.length===0?`<div class="empty"><div class="big">◇</div>no proxies yet</div>`:`
+      <table class="table">
+        <thead><tr><th>Status</th><th>Proxy</th><th>Latency</th><th>Checked</th><th></th></tr></thead>
+        <tbody>
+        ${state.proxies.map(p=>`<tr>
+          <td>${p.status==='live'?'<span class="tag live">LIVE</span>':'<span class="tag down">DEAD</span>'}</td>
+          <td class="mono">${esc(p.proxy.length>60?p.proxy.slice(0,60)+'…':p.proxy)}</td>
+          <td class="mono">${p.latency?p.latency+'s':'—'}</td>
+          <td style="color:var(--dim);font-size:10.5px">${p.checked_at?p.checked_at.slice(0,19).replace('T',' '):''}</td>
+          <td class="actions"><button class="btn btn-sm btn-danger" data-del-proxy="${p.id}">×</button></td>
+        </tr>`).join('')}
+        </tbody>
+      </table>`}
+    </div>`;
+}
+
+// ── Hits ───────────────────────────────────────────────────────────────────
+function renderHits() {
+  const list = state.adminCache.myHits || [];
+  if (!list.length) return `<div class="panel"><div class="empty"><div class="big">●</div>no charged hits yet</div></div>`;
+  return `
+    <div class="pill-row"><span class="pill ok">${list.length} total hits</span><button class="btn btn-sm btn-danger" id="hits-clear" style="margin-left:auto">Clear All</button></div>
+    <div class="panel">
+      <div class="results-list">
+        ${list.map(h=>`
+          <div style="padding:13px 18px;border-bottom:1px solid var(--line)">
+            <div style="display:flex;justify-content:space-between;align-items:start;gap:10px;flex-wrap:wrap">
+              <div style="flex:1;min-width:0">
+                <div class="mono" style="color:#e0e0e0;font-size:12.5px">${esc(h.cc)}</div>
+                <div style="color:var(--dim);font-size:11px;margin-top:4px">
+                  ${h.bin_flag?`${esc(h.bin_flag)} `:''}${esc(h.bin_bank||'')}${h.bin_country?' · '+esc(h.bin_country):''}${h.bin_type?' · '+esc(h.bin_type):''}
+                </div>
+              </div>
+              <div style="text-align:right">
+                <div style="color:var(--charged);font-size:11px;font-weight:700;letter-spacing:.5px">${(h.amount?'$'+h.amount.toFixed(2)+' '+h.currency:'—')}</div>
+                <div style="color:var(--dim);font-size:10px;margin-top:3px">${(h.ts||'').slice(0,19).replace('T',' ')}</div>
+              </div>
+            </div>
+            <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+              <span class="pill">${esc(h.response||'')}</span>
+              ${h.gateway?`<span class="pill">${esc(h.gateway)}</span>`:''}
+              ${h.site?`<span class="pill">${esc(h.site)}</span>`:''}
+            </div>
+            <div style="margin-top:8px"><button class="btn btn-sm btn-danger" data-del-hit="${h.id}">delete</button></div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+// ── Jobs ───────────────────────────────────────────────────────────────────
+function renderJobs() {
+  const jobs = state.adminCache.myJobs || [];
+  if (!jobs.length) return `<div class="panel"><div class="empty"><div class="big">▤</div>no jobs yet</div></div>`;
+  return `<div class="panel">
+    <table class="table">
+      <thead><tr><th>ID</th><th>Name</th><th>Status</th><th>Progress</th><th>Charged</th><th>NSF</th><th>Declined</th><th>Errors</th><th></th></tr></thead>
+      <tbody>
+      ${jobs.map(j=>`<tr>
+        <td class="mono">${j.id.slice(0,6)}</td>
+        <td>${esc(j.name)}</td>
+        <td><span class="tag ${j.status==='done'?'on':(j.status==='running'?'pro':'off')}">${j.status}${j.phase==='retrying'?' · retry':''}</span></td>
+        <td class="mono" style="font-size:10.5px">${j.done}/${j.total}</td>
+        <td style="color:var(--charged)">${j.charged||0}</td>
+        <td style="color:var(--live)">${j.nsf||0}</td>
+        <td style="color:var(--decl)">${j.declined||0}</td>
+        <td style="color:var(--warn)">${j.errors||0}</td>
+        <td class="actions"><button class="btn btn-sm" data-open-job="${j.id}">view</button></td>
+      </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+// ── Account ────────────────────────────────────────────────────────────────
+function renderAccount() {
+  const u = state.user;
+  return `
+    <div class="stat-grid" style="grid-template-columns:repeat(4,1fr)">
+      <div class="stat"><div class="label">Plan</div><div class="value" style="font-size:17px;margin-top:6px">${planBadge(u.plan)}</div></div>
+      <div class="stat"><div class="label">Credits</div><div class="value">${u.credits}</div></div>
+      <div class="stat"><div class="label">Checks</div><div class="value">${u.total_checks}</div></div>
+      <div class="stat charged"><div class="label">Hits</div><div class="value" style="color:var(--charged)">${u.total_hits}</div></div>
+    </div>
+    <div class="panel" style="margin-bottom:16px">
+      <div class="panel-head"><span>Redeem Code</span></div>
+      <div class="panel-body">
+        <div class="row2">
+          <input id="redeem-input" placeholder="ERR0R-XXXXXX">
+          <button class="btn btn-primary" id="redeem-btn">Redeem</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><span>Profile</span></div>
+      <div class="panel-body">
+        <div class="field"><label>Email</label><input value="${esc(u.email)}" disabled></div>
+        <div class="field"><label>Plan Expires</label><input value="${u.plan_expires?u.plan_expires.slice(0,10):'Never'}" disabled></div>
+        <div class="field"><label>Joined</label><input value="${(u.created_at||'').slice(0,10)}" disabled></div>
+      </div>
+    </div>`;
+}
+
+// ── Admin ──────────────────────────────────────────────────────────────────
+function renderAdmin() {
+  const tabs = ['users','apis','nodes','sites','charged','codes','jobs','settings','notify'];
+  return `
+    <div class="tabs" style="margin-bottom:16px;background:var(--panel);border:1px solid var(--line);padding:6px;border-radius:8px">
+      ${tabs.map(t=>`<div class="tab ${state.adminTab===t?'active':''}" data-atab="${t}">${titleCase(t)}</div>`).join('')}
+    </div>
+    <div id="admin-content"></div>`;
+}
+
+async function renderAdminTab() {
+  const el = document.getElementById('admin-content');
+  if (!el) return;
+  const t = state.adminTab;
+  el.innerHTML = '<div class="empty">Loading...</div>';
+  try {
+    if (t === 'users') {
+      const users = await api('/api/admin/users');
+      const stats = await api('/api/admin/stats');
+      el.innerHTML = `
+        <div class="stat-grid" style="grid-template-columns:repeat(5,1fr)">
+          <div class="stat"><div class="label">Users</div><div class="value">${stats.users}</div></div>
+          <div class="stat"><div class="label">Jobs</div><div class="value">${stats.jobs}</div></div>
+          <div class="stat charged"><div class="label">Hits</div><div class="value" style="color:var(--charged)">${stats.hits}</div></div>
+          <div class="stat"><div class="label">APIs</div><div class="value">${stats.apis}</div></div>
+          <div class="stat"><div class="label">Nodes</div><div class="value">${stats.nodes}</div></div>
+        </div>
+        <div class="panel" style="margin-bottom:16px">
+          <div class="panel-head"><span>Create User</span></div>
+          <div class="panel-body">
+            <div class="row2">
+              <div class="field"><label>Email</label><input id="nu-email" placeholder="user@example.com"></div>
+              <div class="field"><label>Password</label><input id="nu-pass" placeholder="password"></div>
+            </div>
+            <div class="row2">
+              <div class="field"><label>Plan</label><select id="nu-plan">
+                ${['free','pro','premium','max','unlimited'].map(p=>`<option value="${p}">${p}</option>`).join('')}
+              </select></div>
+              <div class="field"><label>Credits</label><input id="nu-credits" type="number" value="50"></div>
+            </div>
+            <button class="btn btn-primary" id="nu-btn">Create User</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span>Users</span><span class="count">${users.length}</span></div>
+          <table class="table">
+            <thead><tr><th>ID</th><th>Email</th><th>Plan</th><th>Credits</th><th>Checks</th><th>Hits</th><th>Banned</th><th></th></tr></thead>
+            <tbody>
+            ${users.map(u=>`<tr>
+              <td class="mono">${u.id}${u.is_admin?' <span class="tag on">A</span>':''}</td>
+              <td class="mono" style="font-size:10.5px">${esc(u.email)}</td>
+              <td>${planBadge(u.plan)}</td>
+              <td class="mono">${u.credits}</td>
+              <td class="mono">${u.total_checks}</td>
+              <td class="mono" style="color:var(--charged)">${u.total_hits}</td>
+              <td>${u.banned?'<span class="tag down">YES</span>':'—'}</td>
+              <td class="actions">
+                <button class="btn btn-sm" data-edit-user="${u.id}">edit</button>
+                ${!u.is_admin?`<button class="btn btn-sm btn-danger" data-del-user="${u.id}">×</button>`:''}
+              </td>
+            </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+      document.getElementById('nu-btn').onclick = async () => {
+        try {
+          await api('/api/admin/users', {method:'POST', body: JSON.stringify({
+            email: document.getElementById('nu-email').value,
+            password: document.getElementById('nu-pass').value,
+            plan: document.getElementById('nu-plan').value,
+            credits: parseInt(document.getElementById('nu-credits').value)||50,
+          })});
+          toast('user created','ok'); renderAdminTab();
+        } catch(e){ toast(e.message,'err'); }
+      };
+      el.querySelectorAll('[data-edit-user]').forEach(b=>b.onclick=()=>openUserEdit(parseInt(b.dataset.editUser), users));
+      el.querySelectorAll('[data-del-user]').forEach(b=>b.onclick=async()=>{
+        if (!confirm('Delete user?')) return;
+        await api('/api/admin/users/'+b.dataset.delUser, {method:'DELETE'});
+        toast('deleted','ok'); renderAdminTab();
+      });
+    }
+
+    if (t === 'apis') {
+      const apis = await api('/api/admin/apis');
+      el.innerHTML = `
+        <div class="panel" style="margin-bottom:16px">
+          <div class="panel-head"><span>Add API Endpoint</span></div>
+          <div class="panel-body">
+            <div class="row2">
+              <div class="field"><label>Name</label><input id="na-name" placeholder="default"></div>
+              <div class="field"><label>Style</label><select id="na-style">
+                <option value="params">params (?cc=...)</option>
+                <option value="raw">raw (url/shopify?cc...)</option>
+              </select></div>
+            </div>
+            <div class="field"><label>URL</label><input id="na-url" placeholder="http://host:8081/shopify"></div>
+            <div class="row3">
+              <div class="field"><label>Site Required</label><select id="na-site"><option value="0">No</option><option value="1">Yes</option></select></div>
+              <div class="field"><label>Cap</label><input id="na-cap" type="number" value="900"></div>
+              <div class="field"><label>Key (optional)</label><input id="na-key" placeholder=""></div>
+            </div>
+            <button class="btn btn-primary" id="na-btn">Add API</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span>APIs</span><span class="count">${apis.length}</span></div>
+          <table class="table">
+            <thead><tr><th>#</th><th>Name</th><th>URL</th><th>Style</th><th>Site</th><th>Cap</th><th>Enabled</th><th></th></tr></thead>
+            <tbody>
+            ${apis.map(a=>`<tr>
+              <td class="mono">${a.id}</td>
+              <td class="mono" style="font-size:10.5px">${esc(a.name||'')}</td>
+              <td class="mono" style="font-size:10.5px">${esc(a.url.length>50?a.url.slice(0,50)+'…':a.url)}</td>
+              <td><span class="tag off">${a.style}</span></td>
+              <td>${a.site_required?'<span class="tag on">YES</span>':'—'}</td>
+              <td class="mono">${a.cap}</td>
+              <td><span class="tag ${a.enabled?'on':'off'}">${a.enabled?'ON':'OFF'}</span></td>
+              <td class="actions">
+                <button class="btn btn-sm" data-toggle-api="${a.id}">${a.enabled?'off':'on'}</button>
+                <button class="btn btn-sm btn-danger" data-del-api="${a.id}">×</button>
+              </td>
+            </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+      document.getElementById('na-btn').onclick = async () => {
+        try {
+          await api('/api/admin/apis', {method:'POST', body: JSON.stringify({
+            name: document.getElementById('na-name').value,
+            url: document.getElementById('na-url').value,
+            style: document.getElementById('na-style').value,
+            site_required: parseInt(document.getElementById('na-site').value),
+            cap: parseInt(document.getElementById('na-cap').value),
+            api_key: document.getElementById('na-key').value,
+            enabled: 1,
+          })});
+          toast('api added','ok'); renderAdminTab();
+        } catch(e){ toast(e.message,'err'); }
+      };
+      el.querySelectorAll('[data-toggle-api]').forEach(b=>b.onclick=async()=>{
+        const a = apis.find(x=>x.id==b.dataset.toggleApi);
+        await api('/api/admin/apis/'+a.id, {method:'PUT', body: JSON.stringify({...a, enabled: a.enabled?0:1})});
+        renderAdminTab();
+      });
+      el.querySelectorAll('[data-del-api]').forEach(b=>b.onclick=async()=>{
+        if (!confirm('Delete API?')) return;
+        await api('/api/admin/apis/'+b.dataset.delApi, {method:'DELETE'});
+        renderAdminTab();
+      });
+    }
+
+    if (t === 'nodes') {
+      const nodes = await api('/api/admin/nodes');
+      el.innerHTML = `
+        <div class="panel" style="margin-bottom:16px">
+          <div class="panel-head"><span>Add Node</span></div>
+          <div class="panel-body">
+            <div class="row3">
+              <div class="field"><label>Name</label><input id="nn-name" placeholder="VPS-01"></div>
+              <div class="field"><label>Pool</label><select id="nn-pool"><option value="vps">VPS</option><option value="heroku">Heroku</option></select></div>
+              <div class="field"><label>URL</label><input id="nn-url" placeholder="http://host:8080"></div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-primary" id="nn-btn">Add Node</button>
+              <button class="btn" id="nn-probe">Probe All</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span>Nodes</span><span class="count">${nodes.length}</span></div>
+          <table class="table">
+            <thead><tr><th>#</th><th>Name</th><th>Pool</th><th>URL</th><th>Status</th><th>Workers</th><th>RTT</th><th>Enabled</th><th></th></tr></thead>
+            <tbody>
+            ${nodes.map(n=>`<tr>
+              <td class="mono">${n.id}</td>
+              <td class="mono" style="font-size:10.5px">${esc(n.name||'')}</td>
+              <td><span class="tag off">${esc(n.pool)}</span></td>
+              <td class="mono" style="font-size:10.5px">${esc(n.url.length>40?n.url.slice(0,40)+'…':n.url)}</td>
+              <td><span class="tag ${n.status==='live'?'live':(n.status==='cooldown'?'cooldown':'down')}">${esc(n.status)}</span></td>
+              <td class="mono" style="font-size:10.5px">${n.workers_busy}/${n.workers_cap}</td>
+              <td class="mono" style="font-size:10.5px">${n.avg_rtt_ms?Math.round(n.avg_rtt_ms)+'ms':'—'}</td>
+              <td><span class="tag ${n.enabled?'on':'off'}">${n.enabled?'ON':'OFF'}</span></td>
+              <td class="actions">
+                <button class="btn btn-sm" data-toggle-node="${n.id}">${n.enabled?'off':'on'}</button>
+                <button class="btn btn-sm btn-danger" data-del-node="${n.id}">×</button>
+              </td>
+            </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+      document.getElementById('nn-btn').onclick = async () => {
+        try {
+          await api('/api/admin/nodes', {method:'POST', body: JSON.stringify({
+            name: document.getElementById('nn-name').value,
+            pool: document.getElementById('nn-pool').value,
+            url: document.getElementById('nn-url').value,
+            enabled: 1,
+          })});
+          toast('node added','ok'); renderAdminTab();
+        } catch(e){ toast(e.message,'err'); }
+      };
+      document.getElementById('nn-probe').onclick = async () => {
+        toast('probing...','');
+        await api('/api/admin/nodes/probe', {method:'POST'});
+        toast('probe done','ok'); renderAdminTab();
+      };
+      el.querySelectorAll('[data-toggle-node]').forEach(b=>b.onclick=async()=>{
+        const n = nodes.find(x=>x.id==b.dataset.toggleNode);
+        await api('/api/admin/nodes/'+n.id, {method:'PUT', body: JSON.stringify({...n, enabled: n.enabled?0:1})});
+        renderAdminTab();
+      });
+      el.querySelectorAll('[data-del-node]').forEach(b=>b.onclick=async()=>{
+        if (!confirm('Delete node?')) return;
+        await api('/api/admin/nodes/'+b.dataset.delNode, {method:'DELETE'});
+        renderAdminTab();
+      });
+    }
+
+    if (t === 'sites') {
+      const sites = await api('/api/admin/sites');
+      const settings = await api('/api/admin/settings');
+      el.innerHTML = `
+        <div class="panel" style="margin-bottom:16px">
+          <div class="panel-head"><span>Add Site</span><span class="count">max price: $${settings.site_max_price||'3.0'}</span></div>
+          <div class="panel-body">
+            <div class="row2">
+              <input id="ns-url" placeholder="store.myshopify.com">
+              <button class="btn btn-primary" id="ns-btn">Add</button>
+            </div>
+            <div class="file-drop" style="margin-top:10px" id="ns-bulk-drop">
+              <div class="label">bulk .txt upload</div>
+              <input type="file" id="ns-bulk-file" accept=".txt" style="display:none">
+            </div>
+            <button class="btn btn-sm" id="ns-probe" style="margin-top:10px">Probe All</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span>Sites</span><span class="count">${sites.length}</span></div>
+          <table class="table">
+            <thead><tr><th>#</th><th>URL</th><th>Price</th><th>Health</th><th>Last Check</th><th></th></tr></thead>
+            <tbody>
+            ${sites.map(s=>`<tr>
+              <td class="mono">${s.id}</td>
+              <td class="mono" style="font-size:10.5px">${esc(s.url)}</td>
+              <td class="mono">${s.price?'$'+s.price.toFixed(2):'—'}</td>
+              <td><span class="tag ${s.health==='ok'?'on':(s.health==='down'?'down':'off')}">${esc(s.health)}</span></td>
+              <td style="color:var(--dim);font-size:10.5px">${s.last_check?new Date(s.last_check*1000).toLocaleString():'—'}</td>
+              <td class="actions"><button class="btn btn-sm btn-danger" data-del-site="${s.id}">×</button></td>
+            </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+      document.getElementById('ns-btn').onclick = async () => {
+        try {
+          const r = await api('/api/admin/sites', {method:'POST', body: JSON.stringify({url: document.getElementById('ns-url').value})});
+          toast(`added · $${r.price}`, 'ok'); renderAdminTab();
+        } catch(e){ toast(e.message,'err'); }
+      };
+      document.getElementById('ns-probe').onclick = async () => {
+        toast('probing sites...','');
+        await api('/api/admin/sites/probe', {method:'POST'});
+        toast('done','ok'); renderAdminTab();
+      };
+      const bulkDrop = document.getElementById('ns-bulk-drop');
+      const bulkFile = document.getElementById('ns-bulk-file');
+      bulkDrop.onclick = () => bulkFile.click();
+      bulkFile.onchange = async (e) => {
+        const f = e.target.files[0]; if (!f) return;
+        const txt = await f.text();
+        const urls = txt.split(/\s+/).filter(Boolean);
+        try {
+          const r = await api('/api/admin/sites/bulk', {method:'POST', body: JSON.stringify({urls})});
+          toast(`added ${r.added.length} · rejected ${r.rejected.length}`, 'ok'); renderAdminTab();
+        } catch(e){ toast(e.message,'err'); }
+      };
+      el.querySelectorAll('[data-del-site]').forEach(b=>b.onclick=async()=>{
+        await api('/api/admin/sites/'+b.dataset.delSite, {method:'DELETE'});
+        renderAdminTab();
+      });
+    }
+
+    if (t === 'charged') {
+      const hits = await api('/api/admin/charged');
+      el.innerHTML = `
+        <div class="pill-row"><span class="pill ok">${hits.length} hits</span><button class="btn btn-sm btn-danger" id="ac-clear" style="margin-left:auto">Clear All</button></div>
+        <div class="panel">
+          <table class="table">
+            <thead><tr><th>User</th><th>CC</th><th>BIN</th><th>Response</th><th>Amount</th><th>Gateway</th><th>Time</th></tr></thead>
+            <tbody>
+            ${hits.map(h=>`<tr>
+              <td class="mono" style="font-size:10.5px">${esc(h.user_email||'')}</td>
+              <td class="mono" style="font-size:10.5px">${esc(h.cc)}</td>
+              <td style="font-size:10.5px;color:var(--dim)">${h.bin_flag||''} ${esc(h.bin_bank||'')}${h.bin_country?' · '+esc(h.bin_country):''}</td>
+              <td style="color:var(--dim);font-size:10.5px">${esc((h.response||'').slice(0,40))}</td>
+              <td class="mono">${h.amount?'$'+h.amount.toFixed(2):'—'}</td>
+              <td style="color:var(--dim);font-size:10.5px">${esc(h.gateway||'')}</td>
+              <td style="color:var(--dim);font-size:10.5px">${(h.ts||'').slice(0,19).replace('T',' ')}</td>
+            </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+      document.getElementById('ac-clear').onclick = async () => {
+        if (!confirm('Clear all charged hits?')) return;
+        await api('/api/admin/charged', {method:'DELETE'});
+        renderAdminTab();
+      };
+    }
+
+    if (t === 'codes') {
+      const codes = await api('/api/admin/codes');
+      el.innerHTML = `
+        <div class="panel" style="margin-bottom:16px">
+          <div class="panel-head"><span>Generate Code</span></div>
+          <div class="panel-body">
+            <div class="row3">
+              <div class="field"><label>Plan</label><select id="nc-plan">
+                ${['free','pro','premium','max','unlimited'].map(p=>`<option value="${p}">${p}</option>`).join('')}
+              </select></div>
+              <div class="field"><label>Days</label><input id="nc-days" type="number" value="30"></div>
+              <div class="field"><label>Uses</label><input id="nc-uses" type="number" value="1"></div>
+            </div>
+            <button class="btn btn-primary" id="nc-btn">Generate</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span>Codes</span><span class="count">${codes.length}</span></div>
+          <table class="table">
+            <thead><tr><th>Code</th><th>Plan</th><th>Days</th><th>Used</th><th></th></tr></thead>
+            <tbody>
+            ${codes.map(c=>`<tr>
+              <td class="mono">${c.code}</td>
+              <td>${planBadge(c.plan)}</td>
+              <td class="mono">${c.days}</td>
+              <td class="mono">${c.used} / ${c.max_uses}</td>
+              <td class="actions"><button class="btn btn-sm btn-danger" data-del-code="${c.code}">×</button></td>
+            </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+      document.getElementById('nc-btn').onclick = async () => {
+        try {
+          const r = await api('/api/admin/codes', {method:'POST', body: JSON.stringify({
+            plan: document.getElementById('nc-plan').value,
+            uses: parseInt(document.getElementById('nc-uses').value),
+            days: parseInt(document.getElementById('nc-days').value),
+          })});
+          toast('code: '+r.code,'ok'); renderAdminTab();
+        } catch(e){ toast(e.message,'err'); }
+      };
+      el.querySelectorAll('[data-del-code]').forEach(b=>b.onclick=async()=>{
+        await api('/api/admin/codes/'+encodeURIComponent(b.dataset.delCode), {method:'DELETE'});
+        renderAdminTab();
+      });
+    }
+
+    if (t === 'jobs') {
+      const jobs = await api('/api/admin/jobs');
+      el.innerHTML = `<div class="panel">
+        <table class="table">
+          <thead><tr><th>User</th><th>ID</th><th>Status</th><th>Progress</th><th>Charged</th><th>NSF</th><th>Declined</th><th>Errors</th><th>Created</th></tr></thead>
+          <tbody>
+          ${jobs.map(j=>`<tr>
+            <td class="mono" style="font-size:10.5px">${esc(j.user_email||'')}</td>
+            <td class="mono" style="font-size:10.5px">${j.id.slice(0,8)}</td>
+            <td><span class="tag ${j.status==='done'?'on':(j.status==='running'?'pro':'off')}">${j.status}${j.phase==='retrying'?' · retry':''}</span></td>
+            <td class="mono" style="font-size:10.5px">${j.done}/${j.total}</td>
+            <td style="color:var(--charged)" class="mono">${j.charged||0}</td>
+            <td style="color:var(--live)" class="mono">${j.nsf||0}</td>
+            <td style="color:var(--decl)" class="mono">${j.declined||0}</td>
+            <td style="color:var(--warn)" class="mono">${j.errors||0}</td>
+            <td style="color:var(--dim);font-size:10.5px">${(j.created_at||'').slice(0,19).replace('T',' ')}</td>
+          </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+    }
+
+    if (t === 'settings') {
+      const s = await api('/api/admin/settings');
+      el.innerHTML = `
+        <div class="panel" style="margin-bottom:16px">
+          <div class="panel-head"><span>Bot Forwarding</span></div>
+          <div class="panel-body">
+            <div class="field"><label>Bot Token</label><input id="s-bot" value="${esc(s.bot_token||'')}" placeholder="123456:ABC..."></div>
+            <div class="field"><label>Admin Chat ID</label><input id="s-chat" value="${esc(s.admin_chat_id||'')}" placeholder="-100..."></div>
+            <div class="row2">
+              <div class="field"><label>Notify On Hit</label><select id="s-notify">
+                <option value="1"${s.notify_on_hit==='1'?' selected':''}>Yes</option>
+                <option value="0"${s.notify_on_hit==='0'?' selected':''}>No</option>
+              </select></div>
+              <div class="field"><label>Job Concurrency</label><input id="s-conc" type="number" value="${s.job_concurrency||15}"></div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-primary" id="s-save">Save</button>
+              <button class="btn" id="s-test">Send Test</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel" style="margin-bottom:16px">
+          <div class="panel-head"><span>Site Settings</span></div>
+          <div class="panel-body">
+            <div class="field"><label>Max Site Price ($)</label><input id="s-maxprice" type="number" step="0.1" value="${s.site_max_price||'3.0'}"></div>
+            <button class="btn btn-primary" id="s-maxprice-save">Save</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span>System</span></div>
+          <div class="panel-body">
+            <div class="field"><label>Maintenance Mode</label><select id="s-maint">
+              <option value="0"${s.maintenance==='0'?' selected':''}>Off</option>
+              <option value="1"${s.maintenance==='1'?' selected':''}>On</option>
+            </select></div>
+            <button class="btn btn-primary" id="s-maint-save">Save</button>
+          </div>
+        </div>`;
+      document.getElementById('s-save').onclick = async () => {
+        try {
+          for (const k of ['bot_token','admin_chat_id','notify_on_hit','job_concurrency']) {
+            const v = document.getElementById('s-'+k.replace('bot_token','bot').replace('admin_chat_id','chat').replace('notify_on_hit','notify').replace('job_concurrency','conc')).value;
+            await api('/api/admin/settings', {method:'POST', body: JSON.stringify({key:k, value:v})});
+          }
+          toast('saved','ok');
+        } catch(e){ toast(e.message,'err'); }
+      };
+      document.getElementById('s-test').onclick = async () => {
+        try { await api('/api/admin/bot/test', {method:'POST'}); toast('test sent','ok'); }
+        catch(e){ toast(e.message,'err'); }
+      };
+      document.getElementById('s-maxprice-save').onclick = async () => {
+        await api('/api/admin/settings', {method:'POST', body: JSON.stringify({key:'site_max_price', value:document.getElementById('s-maxprice').value})});
+        toast('saved','ok');
+      };
+      document.getElementById('s-maint-save').onclick = async () => {
+        await api('/api/admin/settings', {method:'POST', body: JSON.stringify({key:'maintenance', value:document.getElementById('s-maint').value})});
+        toast('saved','ok');
+      };
+    }
+
+    if (t === 'notify') {
+      el.innerHTML = `
+        <div class="panel">
+          <div class="panel-head"><span>Send Notification</span></div>
+          <div class="panel-body">
+            <div class="field"><label>User ID (0 = all)</label><input id="n-user" type="number" value="0"></div>
+            <div class="field"><label>Message</label><textarea id="n-text" placeholder="Message..."></textarea></div>
+            <button class="btn btn-primary" id="n-send">Send</button>
+          </div>
+        </div>`;
+      document.getElementById('n-send').onclick = async () => {
+        try {
+          await api('/api/admin/notify', {method:'POST', body: JSON.stringify({
+            user_id: parseInt(document.getElementById('n-user').value)||0,
+            text: document.getElementById('n-text').value,
+          })});
+          toast('sent','ok');
+        } catch(e){ toast(e.message,'err'); }
+      };
+    }
+  } catch(e) {
+    el.innerHTML = `<div class="empty">error: ${esc(e.message)}</div>`;
+  }
+}
+
+// ── Modals ─────────────────────────────────────────────────────────────────
+function openModal(html) {
+  state.modal = html;
+  render();
+}
+function closeModal() {
+  state.modal = null;
+  render();
+}
+
+function openUserEdit(uid, users) {
+  const u = users.find(x=>x.id===uid);
+  if (!u) return;
+  openModal(`
+    <div class="modal-bg" id="modal-bg" data-uid="${u.id}">
+      <div class="modal">
+        <div class="modal-head"><h3>Edit ${esc(u.email)}</h3><button class="btn btn-sm" id="modal-close">×</button></div>
+        <div class="modal-body">
+          <div class="field"><label>Plan</label><select id="mu-plan">
+            ${['free','pro','premium','max','unlimited'].map(p=>`<option value="${p}"${u.plan===p?' selected':''}>${p}</option>`).join('')}
+          </select></div>
+          <div class="field"><label>Credits</label><input id="mu-credits" type="number" value="${u.credits}"></div>
+          <div class="field"><label>Banned</label><select id="mu-ban">
+            <option value="0"${!u.banned?' selected':''}>No</option>
+            <option value="1"${u.banned?' selected':''}>Yes</option>
+          </select></div>
+          <div class="field"><label>New Password (blank = keep)</label><input id="mu-pass" type="password"></div>
+          <button class="btn btn-primary btn-block" id="mu-save">Save</button>
+        </div>
+      </div>
+    </div>`);
+}
+
+function openPretty(raw) {
+  let html = esc(raw||'(empty)');
+  try {
+    const j = JSON.parse(raw);
+    html = syntaxJSON(j);
+  } catch(_) {}
+  openModal(`
+    <div class="modal-bg" id="modal-bg">
+      <div class="modal wide">
+        <div class="modal-head"><h3>API Response</h3><button class="btn btn-sm" id="modal-close">×</button></div>
+        <div class="modal-body"><pre class="pretty">${html}</pre></div>
+      </div>
+    </div>`);
+}
+
+function syntaxJSON(obj) {
+  const json = JSON.stringify(obj, null, 2);
+  return esc(json)
+    .replace(/"([^"]+)":/g, '<span class="key">"$1"</span>:')
+    .replace(/: "([^"]*)"/g, ': <span class="str">"$1"</span>')
+    .replace(/: (\d+\.?\d*)/g, ': <span class="num">$1</span>')
+    .replace(/: (true|false)/g, ': <span class="bool">$1</span>')
+    .replace(/: null/g, ': <span class="null">null</span>');
+}
+
+async function openBin(bin8) {
+  const bin6 = (bin8||'').replace(/\D/g,'').slice(0,6);
+  if (bin6.length < 6) return toast('invalid bin','err');
+  let data = state.binCache[bin6];
+  if (!data) {
+    try { data = await api('/api/bin/'+bin6); state.binCache[bin6] = data; }
+    catch(e){ return toast(e.message,'err'); }
+  }
+  if (data.error) return toast(data.error,'err');
+  openModal(`
+    <div class="modal-bg" id="modal-bg">
+      <div class="modal">
+        <div class="modal-head"><h3>BIN ${bin6}</h3><button class="btn btn-sm" id="modal-close">×</button></div>
+        <div class="modal-body">
+          <div class="bin-card">
+            <div class="bin-item"><div class="k">Issuer</div><div class="v">${esc(data.issuer||'—')}</div></div>
+            <div class="bin-item"><div class="k">Country</div><div class="v">${esc(data.flag||'')} ${esc(data.country||'—')}</div></div>
+            <div class="bin-item"><div class="k">Type</div><div class="v">${esc(data.type||'—')}</div></div>
+            <div class="bin-item"><div class="k">Scheme</div><div class="v">${esc(data.scheme||'—')}</div></div>
+            <div class="bin-item"><div class="k">Tier</div><div class="v">${esc(data.tier||'—')}</div></div>
+            <div class="bin-item"><div class="k">Bank Phone</div><div class="v">${esc(data.bank_phone||'—')}</div></div>
+          </div>
+        </div>
+      </div>
+    </div>`);
+}
+
+async function openJob(jobId) {
+  try {
+    const r = await api('/api/jobs/'+jobId);
+    const rows = r.cards.map(c=>`<div style="display:grid;grid-template-columns:70px 1fr 1fr;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-family:monospace;font-size:11px;align-items:center">
+      <span class="badge ${c.status}">${(c.status||'').toUpperCase()}</span>
+      <span>${esc(c.cc)}</span>
+      <span style="color:var(--dim)">${esc((c.response||'').slice(0,40))}</span>
+    </div>`).join('');
+    openModal(`
+      <div class="modal-bg" id="modal-bg">
+        <div class="modal wide">
+          <div class="modal-head"><h3>Job ${r.job.id}</h3><button class="btn btn-sm" id="modal-close">×</button></div>
+          <div class="modal-body">${rows||'<div class="empty">no cards</div>'}</div>
+        </div>
+      </div>`);
+  } catch(e){ toast(e.message,'err'); }
+}
+
+function bindModal() {
+  const bg = document.getElementById('modal-bg');
+  if (!bg) return;
+  const close = document.getElementById('modal-close');
+  if (close) close.onclick = closeModal;
+  bg.addEventListener('click', e => { if (e.target === bg) closeModal(); });
+  const save = document.getElementById('mu-save');
+  if (save) {
+    save.onclick = async () => {
+      const uid = parseInt(bg.dataset.uid);
+      try {
+        const body = {
+          plan: document.getElementById('mu-plan').value,
+          credits: parseInt(document.getElementById('mu-credits').value),
+          banned: parseInt(document.getElementById('mu-ban').value),
+        };
+        const pass = document.getElementById('mu-pass').value;
+        if (pass) body.password = pass;
+        await api('/api/admin/users/'+uid, {method:'PUT', body: JSON.stringify(body)});
+        toast('updated','ok'); closeModal();
+        setTimeout(renderAdminTab, 50);
+      } catch(e){ toast(e.message,'err'); }
+    };
+  }
+}
+
+// ── Bindings ───────────────────────────────────────────────────────────────
+function bindApp() {
+  document.getElementById('logout-btn').onclick = logout;
+  const sideToggle = document.getElementById('side-toggle');
+  if (sideToggle) sideToggle.onclick = () => { state.sideOpen = !state.sideOpen; render(); };
+
+  document.getElementById('notif-btn').onclick = async () => {
+    await loadNotifications();
+    const list = state.notifications;
+    if (list.some(n=>!n.read)) {
+      try { await api('/api/notifications/read', {method:'POST'}); } catch(e){}
+      state.notifications = list.map(n=>({...n, read:1}));
+    }
+    const body = list.length
+      ? list.map(n=>`<div style="padding:11px 0;border-bottom:1px solid var(--line);font-size:12.5px"><div>${esc(n.text)}</div><div style="color:var(--dim);font-size:10px;margin-top:4px">${(n.ts||'').slice(0,19).replace('T',' ')}</div></div>`).join('')
+      : '<div class="empty">no notifications</div>';
+    openModal(`<div class="modal-bg" id="modal-bg"><div class="modal"><div class="modal-head"><h3>Notifications</h3><button class="btn btn-sm" id="modal-close">×</button></div><div class="modal-body">${body}</div></div></div>`);
+  };
+
+  document.querySelectorAll('[data-nav]').forEach(el => el.onclick = () => setView(el.dataset.nav));
+  document.querySelectorAll('[data-atab]').forEach(el => el.onclick = () => { state.adminTab = el.dataset.atab; render(); });
+
+  if (state.view === 'admin') renderAdminTab();
+  if (state.view === 'checker') bindChecker();
+  if (state.view === 'proxies') bindProxies();
+  if (state.view === 'hits') bindHits();
+  if (state.view === 'jobs') bindJobs();
+  if (state.view === 'account') bindAccount();
+}
+
+function bindChecker() {
+  const g = id => document.getElementById(id);
+  g('gen-bin')?.addEventListener('input', e => state.genBin = e.target.value);
+  g('gen-month')?.addEventListener('change', e => state.genMonth = e.target.value);
+  g('gen-year')?.addEventListener('change', e => state.genYear = e.target.value);
+  g('gen-cvv')?.addEventListener('input', e => state.genCvv = e.target.value);
+  g('gen-count')?.addEventListener('input', e => state.genCount = parseInt(e.target.value)||10);
+  g('cards-input')?.addEventListener('input', e => state.cardsInput = e.target.value);
+  g('checker-proxies')?.addEventListener('input', e => state.proxiesInput = e.target.value);
+
+  g('cards-file-drop')?.addEventListener('click', () => g('cards-file').click());
+  g('cards-file')?.addEventListener('change', async e => {
+    const f = e.target.files[0]; if (!f) return;
+    const txt = await f.text();
+    state.cardsInput = (state.cardsInput ? state.cardsInput.trim()+'\n' : '') + txt.trim();
+    render();
+  });
+  g('proxies-file-drop')?.addEventListener('click', () => g('proxies-file').click());
+  g('proxies-file')?.addEventListener('change', async e => {
+    const f = e.target.files[0]; if (!f) return;
+    const txt = await f.text();
+    state.proxiesInput = txt.trim();
+    render();
+  });
+
+  g('gen-btn').onclick = async () => {
+    try {
+      const r = await api('/api/cc/gen', {method:'POST', body: JSON.stringify({
+        bin: state.genBin, month: state.genMonth, year: state.genYear, cvv: state.genCvv, count: state.genCount,
+      })});
+      state.cardsInput = (state.cardsInput?state.cardsInput.trim()+'\n':'') + r.cards.join('\n');
+      render();
+    } catch(e){ toast(e.message,'err'); }
+  };
+
+  g('validate-proxies-btn').onclick = async () => {
+    const raw = g('checker-proxies').value.trim();
+    if (!raw) return toast('paste proxies','err');
+    const lines = raw.split(/\s+/).filter(Boolean);
+    g('validate-proxies-btn').disabled = true;
+    g('validate-proxies-btn').textContent = 'Testing...';
+    try {
+      const r = await api('/api/proxies/validate', {method:'POST', body: JSON.stringify({proxies: lines})});
+      toast(`tested ${r.tested} · live ${r.live} · dead ${r.dead}`, 'ok');
+      state.proxiesInput = ''; await loadProxies(); render();
+    } catch(e){ toast(e.message,'err'); g('validate-proxies-btn').disabled=false; g('validate-proxies-btn').textContent='Validate'; }
+  };
+  g('proxies-goto-btn').onclick = () => setView('proxies');
+
+  g('start-check-btn').onclick = async () => {
+    const cards = g('cards-input').value.split(/\s+/).filter(Boolean);
+    if (!cards.length) return toast('paste cards first','err');
+    try {
+      g('start-check-btn').disabled = true;
+      g('start-check-btn').textContent = '⏳ Starting...';
+      const r = await api('/api/check/start', {method:'POST', body: JSON.stringify({cards})});
+      state.jobId = r.job_id; state.results = [];
+      toast(`job started · ${r.total} cards`, 'ok');
+      render();
+      startPolling(r.job_id);
+    } catch(e){
+      toast(e.message,'err');
+      g('start-check-btn').disabled=false; g('start-check-btn').textContent='▶ Start Checking';
+    }
+  };
+
+  document.querySelectorAll('[data-tab]').forEach(el => el.onclick = () => { state.tabFilter = el.dataset.tab; render(); });
+  document.querySelectorAll('[data-raw]').forEach(b => b.onclick = e => { e.stopPropagation(); openPretty(b.dataset.raw); });
+  document.querySelectorAll('[data-bin]').forEach(b => b.onclick = e => { e.stopPropagation(); openBin(b.dataset.bin); });
+  document.querySelectorAll('[data-copy]').forEach(b => b.onclick = e => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(b.dataset.copy);
+    toast('copied','ok');
+  });
+}
+
+function startPolling(jobId) {
+  stopPolling();
+  const tick = async () => {
+    try {
+      const r = await api('/api/jobs/'+jobId);
+      state.job = r.job;
+      state.results = r.cards.filter(c=>c.status!=='pending').map(c=>({
+        id: c.id, cc: c.cc, status: c.status, response: c.response, raw: c.raw,
+        amount: c.amount, currency: c.currency, gateway: c.gateway,
+        bin_bank: c.bin_bank, bin_country: c.bin_country, bin_flag: c.bin_flag, bin_type: c.bin_type,
+      }));
+      await loadStats();
+      if (state.view === 'checker') {
+        const list = document.getElementById('results-list');
+        if (list) list.innerHTML = renderResults();
+        const tabs = document.getElementById('result-tabs');
+        if (tabs) {
+          // update counts
+          const cnt = {all:state.results.length, charged:0, nsf:0, otp:0, declined:0, error:0};
+          state.results.forEach(r=>{ if (cnt[r.status]!==undefined) cnt[r.status]++; });
+          tabs.querySelectorAll('.tab').forEach(el => {
+            const t = el.dataset.tab;
+            el.classList.toggle('active', t===state.tabFilter);
+            const n = el.querySelector('.n');
+            if (n) n.textContent = cnt[t] || '';
+          });
+        }
+        // bind result actions
+        document.querySelectorAll('[data-raw]').forEach(b => b.onclick = e => { e.stopPropagation(); openPretty(b.dataset.raw); });
+        document.querySelectorAll('[data-bin]').forEach(b => b.onclick = e => { e.stopPropagation(); openBin(b.dataset.bin); });
+        document.querySelectorAll('[data-copy]').forEach(b => b.onclick = e => { e.stopPropagation(); navigator.clipboard.writeText(b.dataset.copy); toast('copied','ok'); });
+        // update progress bar
+        const bar = document.querySelector('.progress .bar');
+        if (bar && state.job) bar.style.width = Math.round((state.job.done/state.job.total)*100)+'%';
+        const startBtn = document.getElementById('start-check-btn');
+        if (startBtn && state.job && state.job.status !== 'running' && state.job.status !== 'queued') {
+          startBtn.disabled = false;
+          startBtn.textContent = '▶ Start New Check';
+        }
+      }
+      if (state.job && state.job.status === 'done') {
+        stopPolling();
+        state.jobId = null;
+        toast('job complete','ok');
+        await loadStats();
+        render();
+      }
+    } catch(e){ stopPolling(); }
+  };
+  tick();
+  state.polling = setInterval(tick, 1500);
+}
+
+function stopPolling() {
+  if (state.polling) { clearInterval(state.polling); state.polling = null; }
+}
+
+function bindProxies() {
+  document.getElementById('proxies-add-btn').onclick = async () => {
+    const raw = document.getElementById('proxies-bulk').value.trim();
+    if (!raw) return toast('paste proxies','err');
+    const lines = raw.split(/\s+/).filter(Boolean);
+    document.getElementById('proxies-add-btn').disabled = true;
+    document.getElementById('proxies-add-btn').textContent = 'Testing...';
+    try {
+      const r = await api('/api/proxies/validate', {method:'POST', body: JSON.stringify({proxies: lines})});
+      toast(`tested ${r.tested} · live ${r.live} · dead ${r.dead}`, 'ok');
+      await loadProxies(); render();
+    } catch(e){ toast(e.message,'err'); }
+  };
+  document.getElementById('proxies-clear-btn').onclick = async () => {
+    if (!confirm('Clear all proxies?')) return;
+    await api('/api/proxies', {method:'DELETE'});
+    await loadProxies(); render();
+  };
+  document.getElementById('proxies-bulk-drop').onclick = () => document.getElementById('proxies-bulk-file').click();
+  document.getElementById('proxies-bulk-file').onchange = async e => {
+    const f = e.target.files[0]; if (!f) return;
+    document.getElementById('proxies-bulk').value = await f.text();
+  };
+  document.querySelectorAll('[data-del-proxy]').forEach(b => b.onclick = async () => {
+    await api('/api/proxies/'+b.dataset.delProxy, {method:'DELETE'});
+    await loadProxies(); render();
+  });
+}
+
+async function bindHits() {
+  try { state.adminCache.myHits = await api('/api/hits'); } catch(e){ state.adminCache.myHits = []; }
+  // re-render just the content since it needs async data
+  const vc = document.getElementById('view-content');
+  if (vc) vc.innerHTML = renderHits();
+  document.getElementById('hits-clear')?.addEventListener('click', async () => {
+    if (!confirm('Clear all hits?')) return;
+    await api('/api/hits', {method:'DELETE'});
+    bindHits();
+  });
+  document.querySelectorAll('[data-del-hit]').forEach(b => b.onclick = async () => {
+    await api('/api/hits/'+b.dataset.delHit, {method:'DELETE'});
+    bindHits();
+  });
+}
+
+async function bindJobs() {
+  try { state.adminCache.myJobs = await api('/api/jobs'); } catch(e){ state.adminCache.myJobs = []; }
+  const vc = document.getElementById('view-content');
+  if (vc) vc.innerHTML = renderJobs();
+  document.querySelectorAll('[data-open-job]').forEach(b => b.onclick = () => openJob(b.dataset.openJob));
+}
+
+function bindAccount() {
+  document.getElementById('redeem-btn')?.addEventListener('click', async () => {
+    const code = document.getElementById('redeem-input').value.trim();
+    if (!code) return toast('enter code','err');
+    try {
+      const r = await api('/api/redeem', {method:'POST', body: JSON.stringify({code})});
+      toast(`redeemed ${r.plan} · ${r.days}d`,'ok');
+      state.user = await api('/api/me'); render();
+    } catch(e){ toast(e.message,'err'); }
+  });
+}
+
+// ── boot ────────────────────────────────────────────────────────────────────
+(async () => {
+  if (state.token) {
+    try { await bootstrap(); }
+    catch(e){ state.token=''; localStorage.removeItem('ez_token'); render(); }
+  } else {
+    render();
+  }
+})();
+</script>
+</body>
+</html>
